@@ -1,2 +1,2 @@
-# virtual-closet-frontend
-Front End Code for Virtual Closet
+# closetly-frontend
+Front End Code for Closetly
