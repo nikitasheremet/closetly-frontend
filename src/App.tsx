@@ -13,7 +13,6 @@ function App() {
   return (
   <BrowserRouter
   >
-    {console.log("@@")}
       <Switch>
         <Route path="/account">
           <Account />

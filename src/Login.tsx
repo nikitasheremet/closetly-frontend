@@ -1,10 +1,12 @@
 import React, { useState} from 'react';
 import axios from 'axios'
 import {
-    Link
+    Link,
+    useHistory
   } from "react-router-dom";
 
 function Login() {
+    let history = useHistory();
     const [formData, setFormData] = useState({username: '', password: ''})
     const handleSubmit = async (event) => {
       event.preventDefault()
@@ -17,7 +19,8 @@ function Login() {
         localStorage.setItem('closetlyToken', JSON.stringify(loginResult.data.createdToken))
       }
       if (loginResult.data.loggedIn) {
-        console.log("Redirect the user please!!")
+        history.push('/')
+       
       }
     }
     
