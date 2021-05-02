@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import axios from 'axios'
 import {
     Link,
@@ -20,7 +20,6 @@ function Login() {
       }
       if (loginResult.data.loggedIn) {
         history.push('/')
-       
       }
     }
     
@@ -28,6 +27,20 @@ function Login() {
       const {currentTarget: {name: formKey, value}} = updateEvent
       setFormData(formData => ({...formData, [formKey]: value}))
     }
+    useEffect(() => {
+        (async () => {
+            const token = localStorage.getItem('closetlyToken')
+        if (token) {
+            try {
+                const verifyToken = await axios.get('http://localhost:3000/', {headers: {'Authorization': `Basic ${token}`}})
+                history.push('/')
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        })()
+        
+    }, [])
    return (
     <div>
     <nav>
