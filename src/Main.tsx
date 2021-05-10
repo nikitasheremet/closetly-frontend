@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import axios from "axios"
 import {
     Link,
@@ -6,6 +6,7 @@ import {
   } from "react-router-dom";
 
 function Main() {
+  const [userImages, setUserImages] = useState([])
     let history = useHistory();
     const fetchImages = async () => {
         const authToken = localStorage.getItem('closetlyToken')
@@ -15,18 +16,25 @@ function Main() {
                     history.push('/login')
                 } 
             })
-            console.log(pictureList)
+            if (pictureList && pictureList.data) {
+              setUserImages(pictureList.data)
+            }
+            
         } else {
             history.push('/login')
         }
         
     }
+    useEffect(() => {
+      console.log("MAIN")
+  })
 
     useEffect(() => {
+      
         fetchImages()
     }, [])
  return (
-  <div>
+  <Fragment>
       <nav>
           <ul>
             <li>
@@ -40,7 +48,12 @@ function Main() {
             </li>
           </ul>
         </nav>
-  </div>
+      <div>
+        {userImages.map(image => {
+          return (<img key={image.url} src={image.download_url} width="200px"/>)
+        })}
+      </div>
+  </Fragment>
  )
 }
 

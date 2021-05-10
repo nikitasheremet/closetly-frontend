@@ -4,7 +4,9 @@ import {
   } from "react-router-dom";
 
 function Account() {
-    useEffect(() => {})
+  useEffect(() => {
+    console.log("ACCOUNT")
+})
  return (
   <div>
       <div>
