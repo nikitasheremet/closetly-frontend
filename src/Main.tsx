@@ -1,5 +1,7 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useRef } from "react";
 import axios from "axios"
+
+
 import {
     Link,
     useHistory
@@ -7,6 +9,25 @@ import {
 
 function Main() {
   const [userImages, setUserImages] = useState([])
+  const fileInput = useRef(null)
+  const addPictureClick = () => {
+    fileInput.current.click()
+  }
+  const onFileSubmit = async (e) => {
+    const signature = await axios.get("http://localhost:3000/getSignature")
+    console.log("SIGNATURE IS:", signature.data)
+    const fileInputEl = e.target
+    console.log(fileInputEl.files)
+    const imageFile = fileInputEl.files[0]
+    const formData = new FormData()
+    formData.append("file", imageFile);
+    formData.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET);
+
+    const uploadImageResponse = await axios.post("https://api.cloudinary.com/v1_1/decc6odzg/image/upload", formData)
+
+    setUserImages([{url: uploadImageResponse.data.secure_url}])
+  }
+  
     let history = useHistory();
     const fetchImages = async () => {
         const authToken = localStorage.getItem('closetlyToken')
@@ -25,13 +46,10 @@ function Main() {
         }
         
     }
-    useEffect(() => {
-      console.log("MAIN")
-  })
 
     useEffect(() => {
       
-        fetchImages()
+        // fetchImages()
     }, [])
  return (
   <Fragment>
@@ -49,8 +67,12 @@ function Main() {
           </ul>
         </nav>
       <div>
+        <div>
+          <input ref={fileInput} onChange={onFileSubmit} style={{display: "none"}} type="file" id="imageFile" capture="environment" accept="image/*"></input>
+          <button onClick={addPictureClick}>Add Picture</button>
+        </div>
         {userImages.map(image => {
-          return (<img key={image.url} src={image.download_url} width="200px"/>)
+          return (<img key={image.url} src={image.url} width="200px"/>)
         })}
       </div>
   </Fragment>
