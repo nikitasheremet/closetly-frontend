@@ -1,23 +1,20 @@
 import { Fragment, useEffect, useState, useRef } from "react";
 import axios from "axios"
-
-
 import {
     Link,
     useHistory
   } from "react-router-dom";
+import ImageUpload from "./ImageUpload";
 
 function Main() {
   const [userImages, setUserImages] = useState([])
+  const [isUploadModalShown, toggleUploadModalShownState] = useState(false)
   const fileInput = useRef(null)
   const addPictureClick = () => {
-    fileInput.current.click()
+    toggleUploadModalShownState(true)
   }
   const onFileSubmit = async (e) => {
-    const signature = await axios.get("http://localhost:3000/getSignature")
-    console.log("SIGNATURE IS:", signature.data)
     const fileInputEl = e.target
-    console.log(fileInputEl.files)
     const imageFile = fileInputEl.files[0]
     const formData = new FormData()
     formData.append("file", imageFile);
@@ -25,7 +22,8 @@ function Main() {
 
     const uploadImageResponse = await axios.post("https://api.cloudinary.com/v1_1/decc6odzg/image/upload", formData)
 
-    setUserImages([{url: uploadImageResponse.data.secure_url}])
+
+    setUserImages([...userImages, {url: uploadImageResponse.data.secure_url}])
   }
   
     let history = useHistory();
@@ -68,12 +66,13 @@ function Main() {
         </nav>
       <div>
         <div>
-          <input ref={fileInput} onChange={onFileSubmit} style={{display: "none"}} type="file" id="imageFile" capture="environment" accept="image/*"></input>
+          {/* <input ref={fileInput} onChange={onFileSubmit} style={{display: "none"}} type="file" id="imageFile" capture="environment" accept="image/*"></input> */}
           <button onClick={addPictureClick}>Add Picture</button>
+          {isUploadModalShown && <ImageUpload></ImageUpload>}
         </div>
-        {userImages.map(image => {
+        {/* {userImages.map(image => {
           return (<img key={image.url} src={image.url} width="200px"/>)
-        })}
+        })} */}
       </div>
   </Fragment>
  )

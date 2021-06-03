@@ -1,0 +1,8 @@
+#image-upload-modal {
+  z-index: 100;
+  height: 200px;
+  width: 200px;
+  position: absolute;
+  top: calc((100vh - 200px) / 2);
+  left: calc((100vw - 200px) / 2);
+}
