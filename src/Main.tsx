@@ -68,7 +68,7 @@ function Main() {
         <div>
           {/* <input ref={fileInput} onChange={onFileSubmit} style={{display: "none"}} type="file" id="imageFile" capture="environment" accept="image/*"></input> */}
           <button onClick={addPictureClick}>Add Picture</button>
-          {isUploadModalShown && <ImageUpload></ImageUpload>}
+          {isUploadModalShown && <ImageUpload toggleUploadModalShownState={toggleUploadModalShownState}></ImageUpload>}
         </div>
         {/* {userImages.map(image => {
           return (<img key={image.url} src={image.url} width="200px"/>)

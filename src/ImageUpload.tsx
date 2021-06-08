@@ -6,10 +6,14 @@ import {
   } from "react-router-dom";
 import "./ImageUpload.css"
 
-function ImageUpload() {
+function ImageUpload({toggleUploadModalShownState}) {
     function uploadImage(e) {
         e.preventDefault()
         console.log(e)
+        // make axios call to save the image
+        // if successful close modal, if failure show error message and dont close modal
+        // if successful update array of images shown on main page with new image
+        toggleUploadModalShownState(false)
     }
  return (
   <div id='image-upload-modal'>
