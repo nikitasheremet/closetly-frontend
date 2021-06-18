@@ -6,3 +6,20 @@
   top: calc((100vh - 200px) / 2);
   left: calc((100vw - 200px) / 2);
 }
+#loading-indicator {
+  height: 50px;
+  width: 50px;
+  background-color: black;
+  animation-name: pulse;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes pulse {
+  from {
+    background-color: black;
+  }
+  to {
+    background-color: rgb(152, 152, 152);
+  }
+}
