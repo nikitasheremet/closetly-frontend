@@ -1,12 +1,12 @@
-import './App.css';
+import '../css/App.css';
 import {
   BrowserRouter,
   Switch,
   Route,
 } from "react-router-dom";
-import Account from "./Account"
-import Login from "./Login"
-import Main from "./Main"
+import Account from "./Account/Account"
+import Login from "./Login/Login"
+import Main from "./Home/Main"
 
 function App() {
   return (

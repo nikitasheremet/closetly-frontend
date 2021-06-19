@@ -3,7 +3,7 @@ import axios from "axios"
 import {
     useHistory
   } from "react-router-dom";
-import "./ImageUpload.css"
+import "../../css/ImageUpload.css"
 
 function ImageUpload({toggleUploadModalShownState, setUserImages}) {
     const imageRef = useRef(null)
