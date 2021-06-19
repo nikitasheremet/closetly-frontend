@@ -6,7 +6,7 @@ import {
   } from "react-router-dom";
 import "./ImageUpload.css"
 
-function ImageUpload({toggleUploadModalShownState}) {
+function ImageUpload({toggleUploadModalShownState, setUserImages}) {
     const imageRef = useRef(null)
     const history = useHistory()
     const [isLoading, setIsLoading] = useState(false)
@@ -27,6 +27,8 @@ function ImageUpload({toggleUploadModalShownState}) {
                     } 
                 })
                 setIsLoading(false)
+                toggleUploadModalShownState(false)
+                setUserImages(state => [...state, {url: uploadImageResponse.data.url, name: uploadImageResponse.data.public_id}])
             } else {
                 history.push('/login')
             }

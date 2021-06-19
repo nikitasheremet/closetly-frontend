@@ -13,18 +13,7 @@ function Main() {
   const addPictureClick = () => {
     toggleUploadModalShownState(true)
   }
-  const onFileSubmit = async (e) => {
-    const fileInputEl = e.target
-    const imageFile = fileInputEl.files[0]
-    const formData = new FormData()
-    formData.append("file", imageFile);
-    formData.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET);
 
-    const uploadImageResponse = await axios.post("https://api.cloudinary.com/v1_1/decc6odzg/image/upload", formData)
-
-
-    setUserImages([...userImages, {url: uploadImageResponse.data.secure_url}])
-  }
   
     let history = useHistory();
     const fetchImages = async () => {
@@ -47,7 +36,7 @@ function Main() {
 
     useEffect(() => {
       
-        // fetchImages()
+        fetchImages()
     }, [])
  return (
   <Fragment>
@@ -66,13 +55,12 @@ function Main() {
         </nav>
       <div>
         <div>
-          {/* <input ref={fileInput} onChange={onFileSubmit} style={{display: "none"}} type="file" id="imageFile" capture="environment" accept="image/*"></input> */}
           <button onClick={addPictureClick}>Add Picture</button>
-          {isUploadModalShown && <ImageUpload toggleUploadModalShownState={toggleUploadModalShownState}></ImageUpload>}
+          {isUploadModalShown && <ImageUpload toggleUploadModalShownState={toggleUploadModalShownState} setUserImages={setUserImages}></ImageUpload>}
         </div>
-        {/* {userImages.map(image => {
-          return (<img key={image.url} src={image.url} width="200px"/>)
-        })} */}
+        {userImages.map(image => {
+          return (<img key={image.name} src={image.url} width="200px"/>)
+        })}
       </div>
   </Fragment>
  )
