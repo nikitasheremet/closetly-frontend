@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState, useRef } from "react";
+import { Fragment, useEffect, useState } from "react";
 import axios from "axios"
 import {
     Link,
@@ -9,14 +9,13 @@ import ImageUpload from "./ImageUpload";
 function Main() {
   const [userImages, setUserImages] = useState([])
   const [isUploadModalShown, toggleUploadModalShownState] = useState(false)
-  const fileInput = useRef(null)
   const addPictureClick = () => {
     toggleUploadModalShownState(true)
   }
 
   
     let history = useHistory();
-    const fetchImages = async () => {
+    async function fetchImages() {
         const authToken = localStorage.getItem('closetlyToken')
         if (authToken) {
             const pictureList = await axios.get('http://localhost:3000/showPictures', {headers: {'Authorization': `Basic ${authToken}`}}).catch(err => {
@@ -35,8 +34,8 @@ function Main() {
     }
 
     useEffect(() => {
-      
         fetchImages()
+        // eslint-disable-next-line
     }, [])
  return (
   <Fragment>
@@ -59,7 +58,7 @@ function Main() {
           {isUploadModalShown && <ImageUpload toggleUploadModalShownState={toggleUploadModalShownState} setUserImages={setUserImages}></ImageUpload>}
         </div>
         {userImages.map(image => {
-          return (<img key={image.name} src={image.url} width="200px"/>)
+          return (<img key={image.name} src={image.url} alt="" width="200px"/>)
         })}
       </div>
   </Fragment>

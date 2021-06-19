@@ -1,7 +1,6 @@
-import { Fragment, useEffect, useState, useRef } from "react";
+import {useState, useRef } from "react";
 import axios from "axios"
 import {
-    Link,
     useHistory
   } from "react-router-dom";
 import "./ImageUpload.css"
@@ -21,7 +20,7 @@ function ImageUpload({toggleUploadModalShownState, setUserImages}) {
             const uploadImageResponse = await axios.post("https://api.cloudinary.com/v1_1/decc6odzg/image/upload", formData)
             const authToken = localStorage.getItem('closetlyToken')
             if (authToken) {
-                const pictureList = await  axios.post('http://localhost:3000/saveImage', {description: "", name: uploadImageResponse.data.public_id, url: uploadImageResponse.data.url}, {headers: {'Authorization': `Basic ${authToken}`}}).catch(err => {
+                await  axios.post('http://localhost:3000/saveImage', {description: "", name: uploadImageResponse.data.public_id, url: uploadImageResponse.data.url}, {headers: {'Authorization': `Basic ${authToken}`}}).catch(err => {
                     if (err.response.status === 403) {
                         history.push('/login')
                     } 
@@ -37,12 +36,6 @@ function ImageUpload({toggleUploadModalShownState, setUserImages}) {
                 console.log("Image upload failed", err)
                 setIsLoading(false)
             }
-       
-
-        // make axios call to save the image
-        // if successful close modal, if failure show error message and dont close modal
-        // if successful update array of images shown on main page with new image
-        // toggleUploadModalShownState(false)
     }
  return (
   <div id='image-upload-modal'>

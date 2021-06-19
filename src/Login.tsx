@@ -32,7 +32,7 @@ function Login() {
             const token = localStorage.getItem('closetlyToken')
         if (token) {
             try {
-                const verifyToken = await axios.get('http://localhost:3000/', {headers: {'Authorization': `Basic ${token}`}})
+                await axios.get('http://localhost:3000/', {headers: {'Authorization': `Basic ${token}`}})
                 history.push('/')
             } catch (err) {
                 console.log(err)
@@ -40,7 +40,7 @@ function Login() {
         }
         })()
         
-    }, [])
+    }, [history])
    return (
     <div>
     <nav>
