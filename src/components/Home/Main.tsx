@@ -5,6 +5,7 @@ import {
     useHistory
   } from "react-router-dom";
 import ImageUpload from "./ImageUpload";
+import ImageCard from "./ImageCard"
 
 function Main() {
   const [userImages, setUserImages] = useState([])
@@ -57,9 +58,12 @@ function Main() {
           <button onClick={addPictureClick}>Add Picture</button>
           {isUploadModalShown && <ImageUpload toggleUploadModalShownState={toggleUploadModalShownState} setUserImages={setUserImages}></ImageUpload>}
         </div>
-        {userImages.map(image => {
-          return (<img key={image.name} src={image.url} alt="" width="200px"/>)
-        })}
+        <div style={{display: "flex", flexDirection: "row", flexWrap: "wrap"}}>
+          {userImages.map(image => {
+            return (<ImageCard imageDetails={image}/>)
+          })}
+        </div>
+        
       </div>
   </Fragment>
  )

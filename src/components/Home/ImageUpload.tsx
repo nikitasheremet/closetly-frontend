@@ -3,7 +3,7 @@ import axios from "axios"
 import {
     useHistory
   } from "react-router-dom";
-import "../../css/ImageUpload.css"
+import "./css/ImageUpload.css"
 
 function ImageUpload({toggleUploadModalShownState, setUserImages}) {
     const imageRef = useRef(null)
@@ -23,7 +23,7 @@ function ImageUpload({toggleUploadModalShownState, setUserImages}) {
                 await  axios.post('http://localhost:3000/saveImage', {description: "", name: uploadImageResponse.data.public_id, url: uploadImageResponse.data.url}, {headers: {'Authorization': `Basic ${authToken}`}}).catch(err => {
                     if (err.response.status === 403) {
                         history.push('/login')
-                    } 
+                    }
                 })
                 setIsLoading(false)
                 toggleUploadModalShownState(false)
