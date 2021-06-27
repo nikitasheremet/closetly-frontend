@@ -60,7 +60,7 @@ function Main() {
         </div>
         <div style={{display: "flex", flexDirection: "row", flexWrap: "wrap"}}>
           {userImages.map(image => {
-            return (<ImageCard imageDetails={image}/>)
+            return (<ImageCard key={image.name} imageDetails={image}/>)
           })}
         </div>
         
