@@ -66,6 +66,8 @@ function ImageUpload({ toggleUploadModalShownState, setUserImages }) {
             type="file"
           ></input>
 
+          <label htmlFor="image-title">Cloting Item Title</label>
+          <input name="imageTitle" id="image-title"></input>
           <label htmlFor="clothing-description">
             OPTIONAL: Add a brief description
           </label>
