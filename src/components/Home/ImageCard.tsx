@@ -3,7 +3,7 @@ import {
     useHistory
   } from "react-router-dom";
 import "./css/ImageCard.css"
-function ImageCard({imageDetails}) {
+function ImageCard({imageDetails, togglIsImageDetailsShown, setImageDetails}) {
     const history = useHistory()
     const {name, description, url, _id} = imageDetails
 
@@ -16,7 +16,9 @@ function ImageCard({imageDetails}) {
             }
     }
     return (
-        <div className="image-card">
+        <div onClick={() => {
+            setImageDetails(imageDetails)
+            togglIsImageDetailsShown(true)}} className="image-card">
             <img className="image-photo" src={url} alt={name}/>
             <div className="photo-description">{description}</div>
             <div className="delete-photo-icon" onClick={onClickDeleteImage}></div>

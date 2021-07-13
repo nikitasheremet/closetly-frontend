@@ -6,10 +6,13 @@ import {
   } from "react-router-dom";
 import ImageUpload from "./ImageUpload";
 import ImageCard from "./ImageCard"
+import ImageDetails from "./ImageDetails";
 
 function Main() {
   const [userImages, setUserImages] = useState([])
   const [isUploadModalShown, toggleUploadModalShownState] = useState(false)
+  const [isImageDetailsShown, togglIsImageDetailsShown] = useState(false)
+  const [selectedImageDetails, setImageDetails] = useState({})
   const addPictureClick = () => {
     toggleUploadModalShownState(true)
   }
@@ -60,8 +63,11 @@ function Main() {
         </div>
         <div style={{display: "flex", flexDirection: "row", flexWrap: "wrap"}}>
           {userImages.map(image => {
-            return (<ImageCard key={image.name} imageDetails={image}/>)
+            return (<ImageCard togglIsImageDetailsShown={togglIsImageDetailsShown} setImageDetails={setImageDetails} key={image.name} imageDetails={image}/>)
           })}
+        </div>
+        <div>
+          {isImageDetailsShown && <ImageDetails togglIsImageDetailsShown={togglIsImageDetailsShown}></ImageDetails>}
         </div>
         
       </div>
