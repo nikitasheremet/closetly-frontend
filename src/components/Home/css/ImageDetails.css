@@ -1,0 +1,18 @@
+.delete-photo-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 12px;
+  padding: 2px 0 2px 0;
+  height: 10px;
+  background-color: aqua;
+  content: url(https://image.flaticon.com/icons/png/512/1345/1345823.png);
+}
+.delete-photo-icon:active {
+  background-color: rgb(0, 47, 255);
+}
+@media (hover: hover) {
+  .delete-photo-icon:hover {
+    background-color: rgb(0, 47, 255);
+  }
+}

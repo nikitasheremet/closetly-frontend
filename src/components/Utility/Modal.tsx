@@ -1,10 +1,9 @@
-import { FunctionComponentElement } from "react"
 import "./css/Modal.css"
 
 const Modal = ({children}) => {
   return (
-    <div id="image-upload-modal">
-      <div id="inner-upload-modal">{children}</div>
+    <div id="modal">
+      <div id="inner-modal">{children}</div>
     </div>
   );
 };
