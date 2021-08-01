@@ -8,6 +8,7 @@ function ImageUpload({ toggleUploadModalShownState, setUserImages }) {
   const imageRef = useRef(null);
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
+  const [imageDetails, setImageDetails] = useState({title: "", description: ""})
   async function uploadImage(e) {
     e.preventDefault();
     setIsLoading(true);
@@ -26,7 +27,8 @@ function ImageUpload({ toggleUploadModalShownState, setUserImages }) {
           .post(
             "http://localhost:3000/saveImage",
             {
-              description: "",
+              description: imageDetails.description,
+              title: imageDetails.title,
               name: uploadImageResponse.data.public_id,
               url: uploadImageResponse.data.url,
             },
@@ -44,6 +46,8 @@ function ImageUpload({ toggleUploadModalShownState, setUserImages }) {
           {
             url: uploadImageResponse.data.url,
             name: uploadImageResponse.data.public_id,
+            description: imageDetails.description,
+            title: imageDetails.title,
           },
         ]);
       } else {
@@ -54,9 +58,14 @@ function ImageUpload({ toggleUploadModalShownState, setUserImages }) {
       setIsLoading(false);
     }
   }
+  const onChangeFormInput = (e) => {
+    setImageDetails(state => ({...state, [e.target.name]: e.target.value}))
+  }
   return (
     <Modal>
       {!isLoading && (
+        <>
+         <button onClick={() => toggleUploadModalShownState(false)}>X</button>
         <form onSubmit={uploadImage}>
           <label htmlFor="file-upload">Select a file or take a picture</label>
           <input
@@ -67,17 +76,25 @@ function ImageUpload({ toggleUploadModalShownState, setUserImages }) {
           ></input>
 
           <label htmlFor="image-title">Cloting Item Title</label>
-          <input name="imageTitle" id="image-title"></input>
+          <input name="title" id="image-title" 
+          value={imageDetails.title}
+          onChange={onChangeFormInput}
+          >
+
+          </input>
           <label htmlFor="clothing-description">
             OPTIONAL: Add a brief description
           </label>
           <textarea
-            name="clothingDescription"
+            name="description"
             id="clothing-description"
+            value={imageDetails.description}
+            onChange={onChangeFormInput}
           ></textarea>
 
           <button type="submit">Upload</button>
         </form>
+        </>
       )}
       {isLoading && <div id="loading-indicator"></div>}
     </Modal>
