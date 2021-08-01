@@ -67,7 +67,7 @@ function Main() {
           })}
         </div>
         <div>
-          {isImageDetailsShown && <ImageDetails togglIsImageDetailsShown={togglIsImageDetailsShown}></ImageDetails>}
+          {isImageDetailsShown && <ImageDetails setUserImages={setUserImages} toggleIsImageDetailsShown={togglIsImageDetailsShown} selectedImageDetails={selectedImageDetails}></ImageDetails>}
         </div>
         
       </div>
