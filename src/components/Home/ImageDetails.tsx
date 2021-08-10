@@ -49,12 +49,13 @@ function ImageDetails({
     const authToken = localStorage.getItem("closetlyToken");
 
     if (authToken) {
+      const {name, user, ...detailsToUpdate} = localImageDetails
       try {
-        // await axios.post(
-        //   "http://localhost:3000/removeImage",
-        //   { imageId: _id },
-        //   { headers: { Authorization: `Basic ${authToken}` } }
-        // );
+        await axios.post(
+          "http://localhost:3000/updateImage",
+          { ...detailsToUpdate },
+          { headers: { Authorization: `Basic ${authToken}` } }
+        );
         setUserImages((state) =>
           state.map((imageDetails) => {
             if (imageDetails._id === _id) {
