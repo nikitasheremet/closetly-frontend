@@ -62,12 +62,12 @@ function Main() {
           {isUploadModalShown && <ImageUpload toggleUploadModalShownState={toggleUploadModalShownState} setUserImages={setUserImages}></ImageUpload>}
         </div>
         <div style={{display: "flex", flexDirection: "row", flexWrap: "wrap"}}>
-          {userImages.map(image => {
+          {userImages?.map(image => {
             return (<ImageCard togglIsImageDetailsShown={togglIsImageDetailsShown} setImageDetails={setImageDetails} key={image.name} imageDetails={image}/>)
           })}
         </div>
         <div>
-          {isImageDetailsShown && <ImageDetails setUserImages={setUserImages} toggleIsImageDetailsShown={togglIsImageDetailsShown} selectedImageDetails={selectedImageDetails}></ImageDetails>}
+          {isImageDetailsShown && <ImageDetails setUserImages={setUserImages} toggleIsImageDetailsShown={togglIsImageDetailsShown} selectedImageDetails={selectedImageDetails} setImageDetails={setImageDetails}></ImageDetails>}
         </div>
         
       </div>
