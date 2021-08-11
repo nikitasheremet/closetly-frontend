@@ -36,6 +36,7 @@ function ImageUpload({ toggleUploadModalShownState, setUserImages }) {
               title: imageDetails.title,
               name: uploadImageResponse.data.public_id,
               url: uploadImageResponse.data.url,
+              tags
             },
             { headers: { Authorization: `Basic ${authToken}` } }
           )
@@ -53,6 +54,7 @@ function ImageUpload({ toggleUploadModalShownState, setUserImages }) {
             name: uploadImageResponse.data.public_id,
             description: imageDetails.description,
             title: imageDetails.title,
+            tags
           },
         ]);
       } else {
