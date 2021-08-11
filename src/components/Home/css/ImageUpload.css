@@ -15,3 +15,8 @@
     background-color: rgb(152, 152, 152);
   }
 }
+
+.tag-name:hover::after {
+  content: "X";
+  color: red;
+}
