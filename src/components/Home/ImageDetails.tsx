@@ -10,9 +10,11 @@ function ImageDetails({
   setUserImages,
   setImageDetails,
 }) {
+  console.log(selectedImageDetails)
   const history = useHistory();
+  const tagRef = useRef(null);
   const updateImageInput = useRef(null);
-  const { title, description, url, _id } = selectedImageDetails;
+  const { title, description, url, _id, tags } = selectedImageDetails;
   const [editMode, setEditMode] = useState(false);
   const [localImageDetails, setLocalImageDetails] =
     useState(selectedImageDetails);
@@ -81,6 +83,18 @@ function ImageDetails({
     };
     reader.readAsDataURL(updateImageInput.current.files[0]);
   };
+  const addTag = async () => {
+    const updateTag = async (tagName) => {
+      setLocalImageDetails((state) => ({...state, tags: [...state.tags, tagName]}));
+    };
+    if (tagRef.current.value.trim()) {
+      await updateTag(tagRef.current.value);
+      tagRef.current.value = "";
+    }
+  };
+  const deleteTag = (tagName) => {
+    setLocalImageDetails((state) => ({...state, tags: state.tags.filter((tag) => tag !== tagName)}));
+  };
   return (
     <Modal>
       <div className="buttons">
@@ -134,6 +148,30 @@ function ImageDetails({
       ) : (
         <div className="additional-details">{description}</div>
       )}
+      {editMode && (<><label htmlFor="tag-input"></label>
+          <input ref={tagRef} onKeyDown={e => {
+           
+            if (e.key === "Enter") {
+              addTag()
+            }
+          }} id="tag-input" name="tag"></input><button onClick={addTag} >Add</button></>)}
+      {editMode ? localImageDetails.tags.map(tag => {
+        return (<span
+        className="tag-name-details"
+        key={tag + Number(tag)}
+        onClick={() => deleteTag(tag)}
+      >
+        {tag}
+      </span>)
+      }) : tags.map(tag => {
+        return (<span
+        className="tag-name-details"
+        key={tag + Number(tag)}
+       
+      >
+        {tag}
+      </span>)
+      })}
     </Modal>
   );
 }
