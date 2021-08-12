@@ -10,7 +10,7 @@ function ImageDetails({
   setUserImages,
   setImageDetails,
 }) {
-  console.log(selectedImageDetails)
+  console.log(selectedImageDetails);
   const history = useHistory();
   const tagRef = useRef(null);
   const updateImageInput = useRef(null);
@@ -51,7 +51,7 @@ function ImageDetails({
     const authToken = localStorage.getItem("closetlyToken");
 
     if (authToken) {
-      const {name, user, ...detailsToUpdate} = localImageDetails
+      const { name, user, ...detailsToUpdate } = localImageDetails;
       try {
         await axios.post(
           "http://localhost:3000/updateImage",
@@ -85,7 +85,10 @@ function ImageDetails({
   };
   const addTag = async () => {
     const updateTag = async (tagName) => {
-      setLocalImageDetails((state) => ({...state, tags: [...state.tags, tagName]}));
+      setLocalImageDetails((state) => ({
+        ...state,
+        tags: [...state.tags, tagName],
+      }));
     };
     if (tagRef.current.value.trim()) {
       await updateTag(tagRef.current.value);
@@ -93,7 +96,10 @@ function ImageDetails({
     }
   };
   const deleteTag = (tagName) => {
-    setLocalImageDetails((state) => ({...state, tags: state.tags.filter((tag) => tag !== tagName)}));
+    setLocalImageDetails((state) => ({
+      ...state,
+      tags: state.tags.filter((tag) => tag !== tagName),
+    }));
   };
   return (
     <Modal>
@@ -148,30 +154,41 @@ function ImageDetails({
       ) : (
         <div className="additional-details">{description}</div>
       )}
-      {editMode && (<><label htmlFor="tag-input"></label>
-          <input ref={tagRef} onKeyDown={e => {
-           
-            if (e.key === "Enter") {
-              addTag()
-            }
-          }} id="tag-input" name="tag"></input><button onClick={addTag} >Add</button></>)}
-      {editMode ? localImageDetails.tags.map(tag => {
-        return (<span
-        className="tag-name-details"
-        key={tag + Number(tag)}
-        onClick={() => deleteTag(tag)}
-      >
-        {tag}
-      </span>)
-      }) : tags.map(tag => {
-        return (<span
-        className="tag-name-details"
-        key={tag + Number(tag)}
-       
-      >
-        {tag}
-      </span>)
-      })}
+      {editMode && (
+        <>
+          <label htmlFor="tag-input"></label>
+          <input
+            ref={tagRef}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                addTag();
+              }
+            }}
+            id="tag-input"
+            name="tag"
+          ></input>
+          <button onClick={addTag}>Add</button>
+        </>
+      )}
+      {editMode
+        ? localImageDetails.tags.map((tag) => {
+            return (
+              <span
+                className="tag-name"
+                key={tag + Number(tag)}
+                onClick={() => deleteTag(tag)}
+              >
+                {tag}
+              </span>
+            );
+          })
+        : tags.map((tag) => {
+            return (
+              <span className="tag-name-details" key={tag + Number(tag)}>
+                {tag}
+              </span>
+            );
+          })}
     </Modal>
   );
 }
