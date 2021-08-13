@@ -10,7 +10,6 @@ function ImageDetails({
   setUserImages,
   setImageDetails,
 }) {
-  console.log(selectedImageDetails);
   const history = useHistory();
   const tagRef = useRef(null);
   const updateImageInput = useRef(null);
@@ -87,7 +86,7 @@ function ImageDetails({
     const updateTag = async (tagName) => {
       setLocalImageDetails((state) => ({
         ...state,
-        tags: [...state.tags, tagName],
+        tags: [...(state.tags ? state.tags : []), tagName],
       }));
     };
     if (tagRef.current.value.trim()) {
@@ -171,7 +170,7 @@ function ImageDetails({
         </>
       )}
       {editMode
-        ? localImageDetails.tags.map((tag) => {
+        ? localImageDetails.tags?.map((tag) => {
             return (
               <span
                 className="tag-name"
@@ -182,7 +181,7 @@ function ImageDetails({
               </span>
             );
           })
-        : tags.map((tag) => {
+        : tags?.map((tag) => {
             return (
               <span className="tag-name-details" key={tag + Number(tag)}>
                 {tag}
