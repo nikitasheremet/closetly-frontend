@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
     Link, useHistory
   } from "react-router-dom";
-  import axios from "axios";
+  import serverRequest from "../../helpers/serverRequest";
 
 function Account() {
   const history = useHistory();
@@ -10,24 +10,12 @@ function Account() {
   const handleUpdatePassword = async () => {
     const {pass1, pass2} = updatedPassword
     if (pass1 === pass2) {
-      console.log("PASSWORDS MATCH")
-      const authToken = localStorage.getItem("closetlyToken");
-
-    if (authToken) {
       try {
-        await axios.post(
-          "http://localhost:3000/updatePassword",
-          { newPassword: pass1},
-          { headers: { Authorization: `Basic ${authToken}` } }
-        );
-        console.log("Password was saved")
+        await serverRequest("post",  "http://localhost:3000/updatePassword", { newPassword: pass1}, history)
         setUpdatedPassword({pass1: "", pass2: ""})
       } catch (err) {
         console.error("password could not be saved", err);
       }
-    } else {
-      history.push("/login");
-    }
     } else {
       window.alert("Passwords do not match")
     }

@@ -1,8 +1,8 @@
 import "./css/ImageDetails.css";
 import Modal from "../Utility/Modal";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useRef, useState } from "react";
+import serverRequest from "../../helpers/serverRequest";
 
 function ImageDetails({
   toggleIsImageDetailsShown,
@@ -19,23 +19,9 @@ function ImageDetails({
     useState(selectedImageDetails);
 
   async function onClickDeleteImage() {
-    const authToken = localStorage.getItem("closetlyToken");
-
-    if (authToken) {
-      try {
-        await axios.post(
-          "http://localhost:3000/removeImage",
-          { imageId: _id },
-          { headers: { Authorization: `Basic ${authToken}` } }
-        );
-        setUserImages((state) => state.filter((image) => image._id !== _id));
-        toggleIsImageDetailsShown(false);
-      } catch (err) {
-        console.error("image could not be deleted", err);
-      }
-    } else {
-      history.push("/login");
-    }
+    await serverRequest("post",  "http://localhost:3000/removeImage", { imageId: _id }, history)
+    setUserImages((state) => state.filter((image) => image._id !== _id));
+    toggleIsImageDetailsShown(false);
   }
   const onChangeFormInput = (e) => {
     setLocalImageDetails((state) => ({
@@ -47,17 +33,9 @@ function ImageDetails({
     updateImageInput.current.click();
   };
   const saveUpdatedFields = async () => {
-    const authToken = localStorage.getItem("closetlyToken");
-
-    if (authToken) {
-      const { name, user, ...detailsToUpdate } = localImageDetails;
-      try {
-        await axios.post(
-          "http://localhost:3000/updateImage",
-          { ...detailsToUpdate },
-          { headers: { Authorization: `Basic ${authToken}` } }
-        );
-        setUserImages((state) =>
+    const { name, user, ...detailsToUpdate } = localImageDetails;
+    await serverRequest("post",   "http://localhost:3000/updateImage", detailsToUpdate, history)
+    setUserImages((state) =>
           state.map((imageDetails) => {
             if (imageDetails._id === _id) {
               return localImageDetails;
@@ -68,12 +46,6 @@ function ImageDetails({
         );
         setImageDetails(localImageDetails);
         setEditMode(false);
-      } catch (err) {
-        console.error("details could not be saved", err);
-      }
-    } else {
-      history.push("/login");
-    }
   };
   const handleNewImageChange = () => {
     const reader = new FileReader();

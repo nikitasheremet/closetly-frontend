@@ -3,6 +3,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "./css/ImageUpload.css";
 import Modal from "../Utility/Modal";
+import serverRequest from "../../helpers/serverRequest";
 
 function ImageUpload({ toggleUploadModalShownState, setUserImages }) {
   const imageRef = useRef(null);
@@ -26,25 +27,14 @@ function ImageUpload({ toggleUploadModalShownState, setUserImages }) {
         "https://api.cloudinary.com/v1_1/decc6odzg/image/upload",
         formData
       );
-      const authToken = localStorage.getItem("closetlyToken");
-      if (authToken) {
-        await axios
-          .post(
-            "http://localhost:3000/saveImage",
-            {
-              description: imageDetails.description,
-              title: imageDetails.title,
-              name: uploadImageResponse.data.public_id,
-              url: uploadImageResponse.data.url,
-              tags
-            },
-            { headers: { Authorization: `Basic ${authToken}` } }
-          )
-          .catch((err) => {
-            if (err.response.status === 403) {
-              history.push("/login");
-            }
-          });
+      const dbPayload = {
+        description: imageDetails.description,
+        title: imageDetails.title,
+        name: uploadImageResponse.data.public_id,
+        url: uploadImageResponse.data.url,
+        tags
+      }
+      await serverRequest("post", "http://localhost:3000/saveImage", dbPayload, history)
         setIsLoading(false);
         toggleUploadModalShownState(false);
         setUserImages((state) => [
@@ -57,9 +47,6 @@ function ImageUpload({ toggleUploadModalShownState, setUserImages }) {
             tags
           },
         ]);
-      } else {
-        history.push("/login");
-      }
     } catch (err) {
       console.log("Image upload failed", err);
       setIsLoading(false);
