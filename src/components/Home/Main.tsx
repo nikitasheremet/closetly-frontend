@@ -6,6 +6,7 @@ import ImageDetails from "./ImageDetails";
 import serverRequest from "../../helpers/serverRequest";
 
 function Main() {
+  let history = useHistory();
   const [userImages, setUserImages] = useState([]);
   const [isUploadModalShown, toggleUploadModalShownState] = useState(false);
   const [isImageDetailsShown, togglIsImageDetailsShown] = useState(false);
@@ -36,27 +37,26 @@ function Main() {
 
     setTags(Array.from(new Set(arrayOfTags)));
   }, [userImages]);
-  let history = useHistory();
-  async function fetchImages() {
-    try {
-      const result = await serverRequest(
-        "get",
-        "http://localhost:3000/showPictures",
-        {},
-        history
-      );
-      if (result) {
-        setUserImages(result);
-      }
-    } catch (err) {
-      console.log("Could not fetch images", err);
-    }
-  }
-
+ 
+  
   useEffect(() => {
+    async function fetchImages() {
+      try {
+        const result = await serverRequest(
+          "get",
+          "http://localhost:3000/showPictures",
+          {},
+          history
+        );
+        if (result) {
+          setUserImages(result);
+        }
+      } catch (err) {
+        console.log("Could not fetch images", err);
+      }
+    }
     fetchImages();
-    // eslint-disable-next-line
-  }, []);
+  }, [history]);
   const filterImagesBasedOnTags = (image) => {
     if (!selectedTags.length) {
       return true;
@@ -65,6 +65,8 @@ function Main() {
       ?.map((imageTag) => {
         if (selectedTags.includes(imageTag)) {
           return imageTag;
+        } else {
+          return undefined
         }
       })
       .filter((tag) => tag);
@@ -127,6 +129,8 @@ function Main() {
                   imageDetails={image}
                 />
               );
+            } else {
+              return undefined
             }
           })}
         </div>
