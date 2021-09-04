@@ -11,7 +11,7 @@ function Account() {
     const {pass1, pass2} = updatedPassword
     if (pass1 === pass2) {
       try {
-        await serverRequest("post",  "http://localhost:3000/updatePassword", { newPassword: pass1}, history)
+        await serverRequest("post",  "http://localhost:3000/user/updatePassword", { newPassword: pass1}, history)
         setUpdatedPassword({pass1: "", pass2: ""})
       } catch (err) {
         console.error("password could not be saved", err);

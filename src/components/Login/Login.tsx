@@ -12,7 +12,7 @@ function Login() {
       event.preventDefault()
       const token = localStorage.getItem('closetlyToken')
       const {username, password} = formData
-      const loginResult = await axios.post("http://localhost:3000/login", {
+      const loginResult = await axios.post("http://localhost:3000/user/login", {
         username, password, token
       })
       if (loginResult.data.createdToken) {
