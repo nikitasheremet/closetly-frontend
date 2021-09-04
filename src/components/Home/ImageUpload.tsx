@@ -34,7 +34,7 @@ function ImageUpload({ toggleUploadModalShownState, setUserImages }) {
         url: uploadImageResponse.data.url,
         tags
       }
-      await serverRequest("post", "http://localhost:3000/saveImage", dbPayload, history)
+      await serverRequest("post", "http://localhost:3000/image/saveImage", dbPayload, history)
         setIsLoading(false);
         toggleUploadModalShownState(false);
         setUserImages((state) => [
