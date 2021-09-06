@@ -9,7 +9,7 @@ export default async function serverRequest(
   if (authToken) {
     const result = await axios({
       method: requestType,
-      url: requestURL,
+      url: `${process.env.REACT_APP_BACKEND_URL}/${requestURL}`,
       data: requestPayload,
       headers: { Authorization: `Basic ${authToken}` },
     }).catch((err) => {

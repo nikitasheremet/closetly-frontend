@@ -44,7 +44,7 @@ function Main() {
       try {
         const result = await serverRequest(
           "get",
-          "http://localhost:3000/image/showPictures",
+          `/image/showPictures`,
           {},
           history
         );

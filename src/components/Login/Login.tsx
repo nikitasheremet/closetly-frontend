@@ -12,7 +12,7 @@ function Login() {
       event.preventDefault()
       const token = localStorage.getItem('closetlyToken')
       const {username, password} = formData
-      const loginResult = await axios.post("http://localhost:3000/user/login", {
+      const loginResult = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/user/login`, {
         username, password, token
       })
       if (loginResult.data.createdToken) {
@@ -32,14 +32,13 @@ function Login() {
             const token = localStorage.getItem('closetlyToken')
         if (token) {
             try {
-                await axios.get('http://localhost:3000/', {headers: {'Authorization': `Basic ${token}`}})
+                await axios.get(`${process.env.REACT_APP_BACKEND_URL}/`, {headers: {'Authorization': `Basic ${token}`}})
                 history.push('/')
             } catch (err) {
                 console.log(err)
             }
         }
         })()
-        
     }, [history])
    return (
     <div>
@@ -57,7 +56,7 @@ function Login() {
         </ul>
       </nav>
 
-     <form style={{margin: 10}} onSubmit={handleSubmit} action="http://localhost:3000/login" method="post"> 
+     <form style={{margin: 10}} onSubmit={handleSubmit} action={`${process.env.BACKEND_URL}/login`} method="post"> 
        <label htmlFor="username">Username</label>
        <input id="username" name="username" type="text" value={formData.username} onChange={updateData}/>
        <label htmlFor="password">Password</label>

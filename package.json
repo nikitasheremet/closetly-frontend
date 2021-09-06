@@ -21,7 +21,8 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "REACT_APP_BACKEND_URL=https://young-ridge-58807.herokuapp.com react-scripts start",
+    "start:local": "REACT_APP_BACKEND_URL=http://localhost:8000 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
