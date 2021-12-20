@@ -1,20 +1,21 @@
-import '../css/App.css';
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-} from "react-router-dom";
-import Account from "./Account/Account"
-import Login from "./Login/Login"
-import Main from "./Home/Main"
+import "../css/App.css";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Account from "./Account/Account";
+import Login from "./Login/Login";
+import Main from "./Home/Main";
+import Navbar from "./Navbar";
+import LandingPage from "./LandingPage/LandingPage";
 
 function App() {
   return (
-  <BrowserRouter
-  >
+    <BrowserRouter>
+      <Navbar />
       <Switch>
         <Route path="/account">
           <Account />
+        </Route>
+        <Route path="/landing">
+          <LandingPage />
         </Route>
         <Route path="/login">
           <Login />
@@ -23,7 +24,8 @@ function App() {
           <Main />
         </Route>
       </Switch>
-  </BrowserRouter>)
+    </BrowserRouter>
+  );
 }
 
 export default App;

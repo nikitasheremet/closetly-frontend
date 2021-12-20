@@ -1,5 +1,5 @@
-import { Fragment, useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import ImageUpload from "./ImageUpload";
 import ImageCard from "./ImageCard";
 import ImageDetails from "./ImageDetails";
@@ -37,8 +37,7 @@ function Main() {
 
     setTags(Array.from(new Set(arrayOfTags)));
   }, [userImages]);
- 
-  
+
   useEffect(() => {
     async function fetchImages() {
       try {
@@ -66,7 +65,7 @@ function Main() {
         if (selectedTags.includes(imageTag)) {
           return imageTag;
         } else {
-          return undefined
+          return undefined;
         }
       })
       .filter((tag) => tag);
@@ -77,20 +76,7 @@ function Main() {
     }
   };
   return (
-    <Fragment>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/account">Account</Link>
-          </li>
-          <li>
-            <Link to="/login">Login Page</Link>
-          </li>
-        </ul>
-      </nav>
+    <>
       <div>
         <div>
           <button onClick={addPictureClick}>Add Picture</button>
@@ -130,7 +116,7 @@ function Main() {
                 />
               );
             } else {
-              return undefined
+              return undefined;
             }
           })}
         </div>
@@ -145,7 +131,7 @@ function Main() {
           )}
         </div>
       </div>
-    </Fragment>
+    </>
   );
 }
 
