@@ -1,8 +1,10 @@
 import React from "react";
+import Navbar from "../Navbar";
 import styled from "styled-components";
 const LandingPage = () => {
   return (
     <LandingPageWrapper>
+      <Navbar />
       <LandingPageWelcomeMessage>
         Welcome to Closetly! <br /> Welcome to a more organized closet!
       </LandingPageWelcomeMessage>
@@ -24,7 +26,7 @@ const LandingPageWelcomeMessage = styled.h1`
   text-align: center;
   line-height: 50px;
 `;
-const CtaButtonWrapper = styled.button`
+const CtaButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: space-around;

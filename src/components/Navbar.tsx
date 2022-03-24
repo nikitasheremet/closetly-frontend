@@ -1,12 +1,31 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useLocation } from "react-router-dom";
+
+const externalHeaderLocations = ["landing", "login", "register"];
 
 function Navbar() {
+  const currentPath = useLocation().pathname;
+  const isPathExternal =
+    currentPath &&
+    externalHeaderLocations.filter((pathName) => currentPath.includes(pathName))
+      .length > 0;
+
   return (
     <Nav id="navigation-wrapper">
-      <HeaderLink to="/">Home</HeaderLink>
-      <HeaderLink to="/account">Account</HeaderLink>
-      <HeaderLink to="/login">Login</HeaderLink>
+      {!isPathExternal && (
+        <>
+          <HeaderLink to="/">Home</HeaderLink>
+          <HeaderLink to="/account">Account</HeaderLink>
+        </>
+      )}
+
+      {isPathExternal && (
+        <>
+          <HeaderLink to="/login">Login</HeaderLink>
+          <HeaderLink to="/login">Register</HeaderLink>
+        </>
+      )}
     </Nav>
   );
 }

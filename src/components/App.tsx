@@ -3,13 +3,12 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Account from "./Account/Account";
 import Login from "./Login/Login";
 import Main from "./Home/Main";
-import Navbar from "./Navbar";
+
 import LandingPage from "./LandingPage/LandingPage";
 
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
       <Switch>
         <Route path="/account">
           <Account />
