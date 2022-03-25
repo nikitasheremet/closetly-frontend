@@ -5,21 +5,23 @@ export default async function serverRequest(
   requestPayload,
   history
 ) {
-  const authToken = localStorage.getItem("closetlyToken");
-  if (authToken) {
-    const result = await axios({
-      method: requestType,
-      url: `${process.env.REACT_APP_BACKEND_URL}/${requestURL}`,
-      data: requestPayload,
-      headers: { Authorization: `Basic ${authToken}` },
-    }).catch((err) => {
-      console.log(err);
-      if (err.response.status === 403) {
-        history.push("/login");
+  try {
+    let authToken = localStorage.getItem("closetlyToken");
+    authToken = 1;
+    if (authToken) {
+      try {
+        const result = await axios({
+          method: requestType,
+          url: `${process.env.REACT_APP_BACKEND_URL}/${requestURL}`,
+          data: requestPayload,
+          headers: { Authorization: `Basic ${authToken}` },
+        });
+        return result.data;
+      } catch (err) {
+        console.error(err);
       }
-    });
-    return result.data;
-  } else {
+    }
+  } finally {
     history.push("/login");
   }
 }
