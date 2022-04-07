@@ -1,13 +1,14 @@
 import axios from "axios";
+import { Method } from "axios";
+import { History } from "history/index";
 export default async function serverRequest(
-  requestType,
-  requestURL,
-  requestPayload,
-  history
+  requestType: Method,
+  requestURL: string,
+  requestPayload: any,
+  history: History
 ) {
   try {
-    let authToken = localStorage.getItem("closetlyToken");
-    authToken = 1;
+    let authToken: string = localStorage.getItem("closetlyToken");
     if (authToken) {
       try {
         const result = await axios({
