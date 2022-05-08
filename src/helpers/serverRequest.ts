@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Method } from "axios";
 import { History } from "history/index";
+
 export default async function serverRequest(
   requestType: Method,
   requestURL: string,
