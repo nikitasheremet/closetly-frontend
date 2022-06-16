@@ -1,16 +1,27 @@
-import React from "react";
-import Navbar from "../Navbar";
+import { useContext, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { authContext } from "../../components/hooks/authContent/authContext";
+import Navbar from "../../components/Navbar";
 const LandingPage = () => {
+  const history = useHistory();
+  const authToken = useContext(authContext);
+  console.log(authToken);
+
+  useEffect(() => {
+    if (authToken) {
+      history.push("/home");
+    }
+  }, [authToken]);
   return (
     <LandingPageWrapper>
       <Navbar />
       <LandingPageWelcomeMessage>
-        Welcome to Closetly! <br /> Welcome to a more organized closet!
+        Welcome to Closetly! <br /> Welcome to a more organized you!
       </LandingPageWelcomeMessage>
       <CtaButtonWrapper>
-        <button>Login</button>
-        <button>Register</button>
+        <button onClick={() => history.push("/login")}>Login</button>
+        <button onClick={() => history.push("/register")}>Register</button>
       </CtaButtonWrapper>
     </LandingPageWrapper>
   );
