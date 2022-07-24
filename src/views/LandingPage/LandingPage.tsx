@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { authContext } from "../../components/hooks/authContent/authContext";
+import { authContext } from "../../hooks/authContent/authContext";
 import Navbar from "../../components/Navbar";
 const LandingPage = () => {
   const history = useHistory();

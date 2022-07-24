@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useLayoutEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import Navbar from "../Navbar";
+import Navbar from "../../components/Navbar";
+import serverRequest from "../../helpers/serverRequest";
 
 function Login() {
   let history = useHistory();
@@ -10,14 +11,23 @@ function Login() {
     event.preventDefault();
     const token = localStorage.getItem("closetlyToken");
     const { username, password } = formData;
-    const loginResult = await axios.post(
-      `${process.env.REACT_APP_BACKEND_URL}/user/login`,
+    const loginResult = await serverRequest(
+      "POST",
+      "user/login",
       {
         username,
         password,
-        token,
-      }
+      },
+      history
     );
+    // const loginResult = await axios.post(
+    //   `${process.env.REACT_APP_BACKEND_URL}/user/login`,
+    //   {
+    //     username,
+    //     password,
+    //     token,
+    //   }
+    // );
     if (loginResult.data.createdToken) {
       localStorage.setItem(
         "closetlyToken",
@@ -25,7 +35,8 @@ function Login() {
       );
     }
     if (loginResult.data.loggedIn) {
-      history.push("/");
+      console.log("1");
+      history.push("/home");
     }
   };
 
@@ -43,6 +54,7 @@ function Login() {
           await axios.get(`${process.env.REACT_APP_BACKEND_URL}/`, {
             headers: { Authorization: `Basic ${token}` },
           });
+          console.log("pushing to '/'");
           history.push("/");
         } catch (err) {
           console.log(err);

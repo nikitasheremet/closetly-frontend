@@ -2,8 +2,11 @@ import { useState } from "react";
 import Navbar from "../../components/Navbar";
 import UserInput from "../../components/Utility/Input/UserInput";
 import styled, { css } from "styled-components";
+import serverRequest from "../../helpers/serverRequest";
+import { useHistory } from "react-router-dom";
 
 const RegistrationPage = () => {
+  const history = useHistory();
   const [registrationDetails, setRegistrationDetails] = useState<{
     email: string;
     password: string;
@@ -24,12 +27,23 @@ const RegistrationPage = () => {
     return !Boolean(email && password && reEnterPassword);
   };
 
-  const registerUser = (submitEvent: React.FormEvent) => {
+  const registerUser = async (submitEvent: React.FormEvent) => {
     submitEvent.preventDefault();
-    const { password, reEnterPassword } = registrationDetails;
+    const { email, password, reEnterPassword } = registrationDetails;
     if (password !== reEnterPassword) {
       console.log("passwords don't match");
       return;
+    }
+    try {
+      const createUserResponse = await serverRequest(
+        "post",
+        "user/createUser",
+        { email, password },
+        history,
+        true
+      );
+    } catch (err) {
+      console.error("Error creating a user", err);
     }
   };
   return (

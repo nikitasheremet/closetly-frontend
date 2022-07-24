@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import serverRequest from "../../helpers/serverRequest";
+import Navbar from "../Navbar";
 
 function Account() {
   const history = useHistory();
@@ -33,28 +34,31 @@ function Account() {
     }));
   };
   return (
-    <div>
-      <p>Update your password</p>
-      <label htmlFor="pass-1">Enter new password</label>
-      <input
-        id="pass-1"
-        name="pass1"
-        onChange={handleNewPasswordOnChange}
-        value={updatedPassword.pass1}
-        type="password"
-      ></input>
-      <label htmlFor="pass-2">Re-enter password</label>
-      <input
-        id="pass-2"
-        name="pass2"
-        onChange={handleNewPasswordOnChange}
-        value={updatedPassword.pass2}
-        type="password"
-      ></input>
-      <button id="pass-update" onClick={handleUpdatePassword}>
-        Update Password
-      </button>
-    </div>
+    <>
+      <Navbar />
+      <div>
+        <p>Update your password</p>
+        <label htmlFor="pass-1">Enter new password</label>
+        <input
+          id="pass-1"
+          name="pass1"
+          onChange={handleNewPasswordOnChange}
+          value={updatedPassword.pass1}
+          type="password"
+        ></input>
+        <label htmlFor="pass-2">Re-enter password</label>
+        <input
+          id="pass-2"
+          name="pass2"
+          onChange={handleNewPasswordOnChange}
+          value={updatedPassword.pass2}
+          type="password"
+        ></input>
+        <button id="pass-update" onClick={handleUpdatePassword}>
+          Update Password
+        </button>
+      </div>
+    </>
   );
 }
 

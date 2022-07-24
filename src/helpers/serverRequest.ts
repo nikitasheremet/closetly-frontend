@@ -6,11 +6,13 @@ export default async function serverRequest(
   requestType: Method,
   requestURL: string,
   requestPayload: any,
-  history: History
+  history: History,
+  disableAuthTokenCheck = false
 ) {
   try {
     let authToken: string = localStorage.getItem("closetlyToken");
-    if (authToken) {
+    console.log("authToken exists", !!authToken);
+    if (authToken || disableAuthTokenCheck) {
       try {
         const result = await axios({
           method: requestType,
@@ -20,10 +22,12 @@ export default async function serverRequest(
         });
         return result.data;
       } catch (err) {
-        console.error(err);
+        throw err;
       }
     }
-  } finally {
+    throw "authToken isnt present";
+  } catch (err) {
+    console.log(err);
     history.push("/login");
   }
 }

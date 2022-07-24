@@ -4,6 +4,7 @@ import ImageUpload from "./ImageUpload";
 import ImageCard from "./ImageCard";
 import ImageDetails from "./ImageDetails";
 import serverRequest from "../../helpers/serverRequest";
+import Navbar from "../Navbar";
 
 function Main() {
   let history = useHistory();
@@ -39,11 +40,12 @@ function Main() {
   }, [userImages]);
 
   useEffect(() => {
+    console.log("here");
     async function fetchImages() {
       try {
         const result = await serverRequest(
           "get",
-          `/image/showPictures`,
+          `image/showPictures`,
           {},
           history
         );
@@ -77,6 +79,7 @@ function Main() {
   };
   return (
     <>
+      <Navbar />
       <div>
         <div>
           <button onClick={addPictureClick}>Add Picture</button>
