@@ -21,32 +21,30 @@ function ImageUpload({ toggleUploadModalShownState, setUserImages }) {
     try {
       const imageFile = imageRef.current.files[0];
       const formData = new FormData();
-      formData.append("file", imageFile);
-      formData.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET);
-      const uploadImageResponse = await axios.post(
-        "https://api.cloudinary.com/v1_1/decc6odzg/image/upload",
-        formData
+      formData.append("closet-image", imageFile);
+      formData.append("enctype", "multipart/form-data");
+      formData.append("description", imageDetails.description);
+      formData.append("title", imageDetails.title);
+      formData.append("tags", JSON.stringify(tags));
+
+      const { data: uploadImageResponse } = await serverRequest(
+        "post",
+        `image/saveImage`,
+        formData,
+        history
       );
-      const dbPayload = {
-        description: imageDetails.description,
-        title: imageDetails.title,
-        name: uploadImageResponse.data.public_id,
-        url: uploadImageResponse.data.url,
-        tags
-      }
-      await serverRequest("post", `/image/saveImage`, dbPayload, history)
-        setIsLoading(false);
-        toggleUploadModalShownState(false);
-        setUserImages((state) => [
-          ...state,
-          {
-            url: uploadImageResponse.data.url,
-            name: uploadImageResponse.data.public_id,
-            description: imageDetails.description,
-            title: imageDetails.title,
-            tags
-          },
-        ]);
+      setIsLoading(false);
+      toggleUploadModalShownState(false);
+      setUserImages((state) => [
+        ...state,
+        {
+          url: uploadImageResponse.url,
+          name: uploadImageResponse.public_id,
+          description: imageDetails.description,
+          title: imageDetails.title,
+          tags,
+        },
+      ]);
     } catch (err) {
       console.log("Image upload failed", err);
       setIsLoading(false);
@@ -98,13 +96,18 @@ function ImageUpload({ toggleUploadModalShownState, setUserImages }) {
             onChange={onChangeFormInput}
           ></textarea>
           <label htmlFor="tag-input"></label>
-          <input ref={tagRef} onKeyDown={e => {
-            console.log("")
-            if (e.key === "Enter") {
-              addTag()
-            }
-          }} id="tag-input" name="tag"></input>
-          <button onClick={addTag} >Add</button>
+          <input
+            ref={tagRef}
+            onKeyDown={(e) => {
+              console.log("");
+              if (e.key === "Enter") {
+                addTag();
+              }
+            }}
+            id="tag-input"
+            name="tag"
+          ></input>
+          <button onClick={addTag}>Add</button>
           {tags.map((tag) => {
             return (
               <span

@@ -1,23 +1,26 @@
-import { useEffect, useState } from "react";
+import React, { ReactEventHandler, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import ImageUpload from "./ImageUpload";
 import ImageCard from "./ImageCard";
 import ImageDetails from "./ImageDetails";
 import serverRequest from "../../helpers/serverRequest";
 import Navbar from "../Navbar";
+import { ImageDetailsInterface } from "./types/ImageTypes";
 
 function Main() {
   let history = useHistory();
-  const [userImages, setUserImages] = useState([]);
+  const [userImages, setUserImages] = useState<ImageDetailsInterface[]>([]);
   const [isUploadModalShown, toggleUploadModalShownState] = useState(false);
   const [isImageDetailsShown, togglIsImageDetailsShown] = useState(false);
-  const [selectedImageDetails, setImageDetails] = useState({});
-  const [tags, setTags] = useState([]);
-  const [selectedTags, setSelectedTags] = useState([]);
-  const addPictureClick = () => {
+  const [selectedImageDetails, setImageDetails] = useState<
+    ImageDetailsInterface | {}
+  >({});
+  const [tags, setTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const addPictureClick = (): void => {
     toggleUploadModalShownState(true);
   };
-  const handleTagChange = (e) => {
+  const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       setSelectedTags((state) => [...state, e.target.name]);
     } else {
@@ -34,13 +37,12 @@ function Main() {
       } else {
         return allTags;
       }
-    }, []);
+    }, [] as string[]);
 
     setTags(Array.from(new Set(arrayOfTags)));
   }, [userImages]);
 
   useEffect(() => {
-    console.log("here");
     async function fetchImages() {
       try {
         const result = await serverRequest(
@@ -50,6 +52,7 @@ function Main() {
           history
         );
         if (result) {
+          console.log(result);
           setUserImages(result);
         }
       } catch (err) {
@@ -112,7 +115,7 @@ function Main() {
             if (filterImagesBasedOnTags(image)) {
               return (
                 <ImageCard
-                  togglIsImageDetailsShown={togglIsImageDetailsShown}
+                  toggleIsImageDetailsShown={togglIsImageDetailsShown}
                   setImageDetails={setImageDetails}
                   key={image.name}
                   imageDetails={image}
