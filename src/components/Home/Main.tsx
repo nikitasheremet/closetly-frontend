@@ -117,7 +117,7 @@ function Main() {
                 <ImageCard
                   toggleIsImageDetailsShown={togglIsImageDetailsShown}
                   setImageDetails={setImageDetails}
-                  key={image.name}
+                  key={image._id}
                   imageDetails={image}
                 />
               );

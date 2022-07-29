@@ -19,7 +19,7 @@ function ImageDetails({
     useState(selectedImageDetails);
 
   async function onClickDeleteImage() {
-    await serverRequest("post",`/image/removeImage`, { imageId: _id }, history)
+    await serverRequest("post", `image/removeImage`, { imageId: _id }, history);
     setUserImages((state) => state.filter((image) => image._id !== _id));
     toggleIsImageDetailsShown(false);
   }
@@ -34,18 +34,18 @@ function ImageDetails({
   };
   const saveUpdatedFields = async () => {
     const { name, user, ...detailsToUpdate } = localImageDetails;
-    await serverRequest("post",`/image/updateImage`, detailsToUpdate, history)
+    await serverRequest("post", `/image/updateImage`, detailsToUpdate, history);
     setUserImages((state) =>
-          state.map((imageDetails) => {
-            if (imageDetails._id === _id) {
-              return localImageDetails;
-            } else {
-              return imageDetails;
-            }
-          })
-        );
-        setImageDetails(localImageDetails);
-        setEditMode(false);
+      state.map((imageDetails) => {
+        if (imageDetails._id === _id) {
+          return localImageDetails;
+        } else {
+          return imageDetails;
+        }
+      })
+    );
+    setImageDetails(localImageDetails);
+    setEditMode(false);
   };
   const handleNewImageChange = () => {
     const reader = new FileReader();

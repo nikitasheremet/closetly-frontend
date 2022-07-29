@@ -4,7 +4,7 @@ function ImageCard({
   toggleIsImageDetailsShown,
   setImageDetails,
 }) {
-  const { name, description, url } = imageDetails;
+  const { _id, description, url } = imageDetails;
   return (
     <div
       onClick={() => {
@@ -13,7 +13,7 @@ function ImageCard({
       }}
       className="image-card"
     >
-      <img className="image-photo" src={url} alt={name} />
+      <img className="image-photo" src={url} alt={_id} />
       <div className="photo-description">{description}</div>
     </div>
   );

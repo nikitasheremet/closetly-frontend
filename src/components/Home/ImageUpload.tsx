@@ -4,8 +4,17 @@ import { useHistory } from "react-router-dom";
 import "./css/ImageUpload.css";
 import Modal from "../Utility/Modal";
 import serverRequest from "../../helpers/serverRequest";
+import { ImageDetailsInterface } from "./types/ImageTypes";
 
-function ImageUpload({ toggleUploadModalShownState, setUserImages }) {
+interface ImageUploadProps {
+  toggleUploadModalShownState: React.Dispatch<React.SetStateAction<boolean>>;
+  setUserImages: React.Dispatch<React.SetStateAction<ImageDetailsInterface[]>>;
+}
+
+function ImageUpload({
+  toggleUploadModalShownState,
+  setUserImages,
+}: ImageUploadProps) {
   const imageRef = useRef(null);
   const tagRef = useRef(null);
   const history = useHistory();
@@ -27,7 +36,7 @@ function ImageUpload({ toggleUploadModalShownState, setUserImages }) {
       formData.append("title", imageDetails.title);
       formData.append("tags", JSON.stringify(tags));
 
-      const { data: uploadImageResponse } = await serverRequest(
+      const uploadImageResponse = await serverRequest(
         "post",
         `image/saveImage`,
         formData,
@@ -39,7 +48,7 @@ function ImageUpload({ toggleUploadModalShownState, setUserImages }) {
         ...state,
         {
           url: uploadImageResponse.url,
-          name: uploadImageResponse.public_id,
+          _id: uploadImageResponse.public_id,
           description: imageDetails.description,
           title: imageDetails.title,
           tags,
