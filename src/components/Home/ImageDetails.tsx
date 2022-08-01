@@ -1,4 +1,5 @@
 import "./css/ImageDetails.css";
+import styled from "styled-components";
 import Modal from "../Utility/Modal";
 import { useHistory } from "react-router-dom";
 import { useRef, useState } from "react";
@@ -102,11 +103,11 @@ function ImageDetails({
       ) : (
         <p className="image-name">{title}</p>
       )}
-      <img
+      <ImageDetailsImg
         className="clothing-image"
         alt={`${title} - ${description}`}
         src={editMode ? localImageDetails.url : url}
-      ></img>
+      ></ImageDetailsImg>
       {editMode && <button onClick={handleChangeImage}>updateImage</button>}
       {editMode && (
         <input
@@ -165,3 +166,7 @@ function ImageDetails({
 }
 
 export default ImageDetails;
+
+const ImageDetailsImg = styled("img")`
+  width: 100%;
+`;
