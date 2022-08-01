@@ -12,7 +12,7 @@ const LandingPage = () => {
     if (authToken) {
       history.push("/home");
     }
-  }, [authToken]);
+  }, [authToken, history]);
   return (
     <LandingPageWrapper>
       <Navbar />

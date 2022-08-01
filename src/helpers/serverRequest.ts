@@ -22,10 +22,10 @@ export default async function serverRequest(
         });
         return result.data;
       } catch (err) {
-        throw err;
+        throw new Error(err);
       }
     }
-    throw "authToken isnt present";
+    throw new Error("authToken isnt present");
   } catch (err) {
     console.log(err);
     history.push("/login");

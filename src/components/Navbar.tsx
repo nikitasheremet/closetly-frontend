@@ -2,17 +2,10 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useLocation, useHistory } from "react-router-dom";
 
-const externalHeaderLocations = ["login", "register"];
-
 function Navbar({ children }: { children?: any }) {
   const history = useHistory();
   const currentPath = useLocation().pathname;
   console.log("currentPath", currentPath);
-  const isPathExternal =
-    currentPath &&
-    externalHeaderLocations.filter((pathName) => currentPath.includes(pathName))
-      .length > 0;
-
   /* 
   cases:
   Landing Page:

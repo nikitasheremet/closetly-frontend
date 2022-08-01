@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "./css/ImageUpload.css";
 import Modal from "../Utility/Modal";

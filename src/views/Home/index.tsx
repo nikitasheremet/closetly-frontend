@@ -1,11 +1,11 @@
-import React, { ReactEventHandler, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import ImageUpload from "./ImageUpload";
-import ImageCard from "./ImageCard";
-import ImageDetails from "./ImageDetails";
+import ImageUpload from "../../components/Home/ImageUpload";
+import ImageCard from "../../components/Home/ImageCard";
+import ImageDetails from "../../components/Home/ImageDetails";
 import serverRequest from "../../helpers/serverRequest";
-import Navbar from "../Navbar";
-import { ImageDetailsInterface } from "./types/ImageTypes";
+import Navbar from "../../components/Navbar";
+import { ImageDetailsInterface } from "../../components/Home/types/ImageTypes";
 
 function Main() {
   let history = useHistory();

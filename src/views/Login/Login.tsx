@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Navbar from "../../components/Navbar";
@@ -9,7 +9,6 @@ function Login() {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const token = localStorage.getItem("closetlyToken");
     const { username, password } = formData;
     const loginResult = await serverRequest(
       "POST",

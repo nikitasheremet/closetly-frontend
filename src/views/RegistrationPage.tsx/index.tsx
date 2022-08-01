@@ -35,7 +35,7 @@ const RegistrationPage = () => {
       return;
     }
     try {
-      const createUserResponse = await serverRequest(
+      await serverRequest(
         "post",
         "user/createUser",
         { email, password },
