@@ -73,10 +73,13 @@ function ImageDetails({
       tags: state.tags.filter((tag) => tag !== tagName),
     }));
   };
+  const closeImageDetailsView = (): void => {
+    toggleIsImageDetailsShown(false);
+  };
   return (
-    <Modal>
+    <Modal clickToClose={closeImageDetailsView}>
       <div className="buttons">
-        <button onClick={() => toggleIsImageDetailsShown(false)}>X</button>
+        <button onClick={() => closeImageDetailsView()}>X</button>
         <div className="delete-photo-icon" onClick={onClickDeleteImage}></div>
         {editMode ? (
           <>

@@ -1,18 +1,25 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 
-const Modal = ({ children }) => {
-  const [innerHeight, setInnerHeight] = useState(0);
-  const [innerWidth, setInnerWidth] = useState(0);
-
+const Modal = ({
+  children,
+  clickToClose,
+}: {
+  children: any;
+  clickToClose?: Function;
+}) => {
+  const [innerHeight, setInnerHeight] = useState<undefined | number>(undefined);
+  const [innerWidth, setInnerWidth] = useState<undefined | number>(undefined);
   useEffect(() => {
     const innerModal = document.getElementById("inner-modal");
-    setInnerHeight(innerModal?.scrollHeight || 0);
-    setInnerWidth(innerModal?.scrollWidth || 0);
+    if (innerModal) {
+      setInnerHeight(innerModal.clientHeight);
+      setInnerWidth(innerModal.clientWidth);
+    }
   }, []);
 
   return (
-    <ModalWrapper id="modal">
+    <ModalWrapper id="modal" onClick={() => clickToClose && clickToClose()}>
       <InnerModal
         id="inner-modal"
         innerHeight={innerHeight}
@@ -32,6 +39,8 @@ const ModalWrapper = styled("div")`
   background-color: rgba(0, 0, 0, 0.65);
 `;
 const InnerModal = styled("div")`
+  visibility: ${({ innerHeight, innerWidth }) =>
+    innerHeight || innerWidth ? "visible" : "hidden"};
   z-index: 100;
   position: absolute;
   top: calc((100vh - ${({ innerHeight }) => innerHeight}px) / 2);
@@ -41,6 +50,7 @@ const InnerModal = styled("div")`
   border-radius: 10px;
   max-width: 80vw;
   max-height: 80vh;
+  overflow: hidden;
 `;
 
 export default Modal;
