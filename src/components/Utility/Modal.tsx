@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Modal = ({
   children,
@@ -21,6 +21,8 @@ const Modal = ({
   return (
     <ModalWrapper id="modal" onClick={() => clickToClose && clickToClose()}>
       <InnerModal
+        // stop propagation so that only clicking outside the inner modal can close the modal
+        onClick={(e: React.SyntheticEvent) => e.stopPropagation()}
         id="inner-modal"
         innerHeight={innerHeight}
         innerWidth={innerWidth}

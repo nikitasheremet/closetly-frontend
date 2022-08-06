@@ -78,92 +78,94 @@ function ImageDetails({
   };
   return (
     <Modal clickToClose={closeImageDetailsView}>
-      <div className="buttons">
-        <button onClick={() => closeImageDetailsView()}>X</button>
-        <div className="delete-photo-icon" onClick={onClickDeleteImage}></div>
-        {editMode ? (
-          <>
-            <button onClick={saveUpdatedFields}>Save</button>
-            <button
-              onClick={() => {
-                setLocalImageDetails(selectedImageDetails);
-                setEditMode(false);
-              }}
-            >
-              Cancel
-            </button>
-          </>
-        ) : (
-          <button onClick={() => setEditMode(true)}>Edit</button>
-        )}
-      </div>
-      {editMode ? (
-        <input
-          name="title"
-          value={localImageDetails.title}
-          onChange={onChangeFormInput}
-        ></input>
-      ) : (
-        <p className="image-name">{title}</p>
-      )}
-      <ImageDetailsImg
-        className="clothing-image"
-        alt={`${title} - ${description}`}
-        src={editMode ? localImageDetails.url : url}
-      ></ImageDetailsImg>
-      {editMode && <button onClick={handleChangeImage}>updateImage</button>}
-      {editMode && (
-        <input
-          type="file"
-          ref={updateImageInput}
-          style={{ display: "none" }}
-          onChange={handleNewImageChange}
-        ></input>
-      )}
-      {editMode ? (
-        <input
-          name="description"
-          value={localImageDetails.description}
-          onChange={onChangeFormInput}
-        ></input>
-      ) : (
-        <div className="additional-details">{description}</div>
-      )}
-      {editMode && (
-        <>
-          <label htmlFor="tag-input"></label>
-          <input
-            ref={tagRef}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                addTag();
-              }
-            }}
-            id="tag-input"
-            name="tag"
-          ></input>
-          <button onClick={addTag}>Add</button>
-        </>
-      )}
-      {editMode
-        ? localImageDetails.tags?.map((tag) => {
-            return (
-              <span
-                className="tag-name"
-                key={tag + Number(tag)}
-                onClick={() => deleteTag(tag)}
+      <div style={{ width: "100%", height: "100%" }}>
+        <div className="buttons">
+          <button onClick={() => closeImageDetailsView()}>X</button>
+          <div className="delete-photo-icon" onClick={onClickDeleteImage}></div>
+          {editMode ? (
+            <>
+              <button onClick={saveUpdatedFields}>Save</button>
+              <button
+                onClick={() => {
+                  setLocalImageDetails(selectedImageDetails);
+                  setEditMode(false);
+                }}
               >
-                {tag}
-              </span>
-            );
-          })
-        : tags?.map((tag) => {
-            return (
-              <span className="tag-name-details" key={tag + Number(tag)}>
-                {tag}
-              </span>
-            );
-          })}
+                Cancel
+              </button>
+            </>
+          ) : (
+            <button onClick={() => setEditMode(true)}>Edit</button>
+          )}
+        </div>
+        {editMode ? (
+          <input
+            name="title"
+            value={localImageDetails.title}
+            onChange={onChangeFormInput}
+          ></input>
+        ) : (
+          <p className="image-name">{title}</p>
+        )}
+        <ImageDetailsImg
+          className="clothing-image"
+          alt={`${title} - ${description}`}
+          src={editMode ? localImageDetails.url : url}
+        ></ImageDetailsImg>
+        {editMode && <button onClick={handleChangeImage}>updateImage</button>}
+        {editMode && (
+          <input
+            type="file"
+            ref={updateImageInput}
+            style={{ display: "none" }}
+            onChange={handleNewImageChange}
+          ></input>
+        )}
+        {editMode ? (
+          <input
+            name="description"
+            value={localImageDetails.description}
+            onChange={onChangeFormInput}
+          ></input>
+        ) : (
+          <div className="additional-details">{description}</div>
+        )}
+        {editMode && (
+          <>
+            <label htmlFor="tag-input"></label>
+            <input
+              ref={tagRef}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  addTag();
+                }
+              }}
+              id="tag-input"
+              name="tag"
+            ></input>
+            <button onClick={addTag}>Add</button>
+          </>
+        )}
+        {editMode
+          ? localImageDetails.tags?.map((tag) => {
+              return (
+                <span
+                  className="tag-name"
+                  key={tag + Number(tag)}
+                  onClick={() => deleteTag(tag)}
+                >
+                  {tag}
+                </span>
+              );
+            })
+          : tags?.map((tag) => {
+              return (
+                <span className="tag-name-details" key={tag + Number(tag)}>
+                  {tag}
+                </span>
+              );
+            })}
+      </div>
     </Modal>
   );
 }
