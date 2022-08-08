@@ -96,12 +96,19 @@ export default Navbar;
 
 const HeaderLink = styled(Link)`
   margin: 0 10px 0 10px;
+  color: black;
+  text-decoration: none;
+
+  &:hover {
+    color: darkgrey;
+  }
 `;
 const Nav = styled.nav`
+  font-family: "Source Sans Pro", sans-serif;
   display: flex;
   flex-direction: row;
   height: 2em;
   align-items: center;
-  background-color: #dac5f5;
   height: 100%;
+  border-bottom: 1px solid lightgrey;
 `;
