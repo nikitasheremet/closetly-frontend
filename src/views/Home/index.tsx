@@ -6,6 +6,8 @@ import ImageDetails from "../../components/Home/ImageDetails";
 import serverRequest from "../../helpers/serverRequest";
 import Navbar from "../../components/Navbar";
 import { ImageDetailsInterface } from "../../components/Home/types/ImageTypes";
+import styled from "styled-components";
+import { ReactComponent as AddIcon } from "../../assests/add-button.svg";
 
 function Main() {
   let history = useHistory();
@@ -84,15 +86,15 @@ function Main() {
     <>
       <Navbar />
       <div>
-        <div>
-          <button onClick={addPictureClick}>Add Picture</button>
-          {isUploadModalShown && (
-            <ImageUpload
-              toggleUploadModalShownState={toggleUploadModalShownState}
-              setUserImages={setUserImages}
-            ></ImageUpload>
-          )}
-        </div>
+        <AddImageButton onClick={addPictureClick}>
+          <AddIcon width="100%" />
+        </AddImageButton>
+        {isUploadModalShown && (
+          <ImageUpload
+            toggleUploadModalShownState={toggleUploadModalShownState}
+            setUserImages={setUserImages}
+          ></ImageUpload>
+        )}
         {tags.map((tag) => {
           return (
             <div key={tag + Number(tag)}>
@@ -142,3 +144,14 @@ function Main() {
 }
 
 export default Main;
+
+const AddImageButton = styled.button`
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  border-radius: 50px;
+  height: 80px;
+  width: 80px;
+  font-size: 60px;
+  font-weight: lighter;
+`;
