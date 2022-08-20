@@ -1,6 +1,6 @@
 .image-card {
-  width: 100px;
-  height: 100px;
+  width: 50%;
+
   margin: 20px;
   display: flex;
   flex-direction: column;

@@ -87,7 +87,9 @@ function Main() {
       <Navbar />
       <div>
         <AddImageButton onClick={addPictureClick}>
-          <AddIcon width="100%" />
+          <ImageIcon className="material-symbols-outlined">
+            add_circle
+          </ImageIcon>
         </AddImageButton>
         {isUploadModalShown && (
           <ImageUpload
@@ -111,7 +113,12 @@ function Main() {
           );
         })}
         <div
-          style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            maxHeight: "calc(100vh - 51px)",
+          }}
         >
           {userImages?.map((image) => {
             if (filterImagesBasedOnTags(image)) {
@@ -145,7 +152,7 @@ function Main() {
 
 export default Main;
 
-const AddImageButton = styled.button`
+const AddImageButton = styled.div`
   position: absolute;
   bottom: 10px;
   right: 10px;
@@ -154,4 +161,7 @@ const AddImageButton = styled.button`
   width: 80px;
   font-size: 60px;
   font-weight: lighter;
+`;
+const ImageIcon = styled.span`
+  font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 44, "opsz" 0;
 `;
