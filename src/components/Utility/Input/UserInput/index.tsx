@@ -22,13 +22,14 @@ const UserInput = ({
   ...otherProps
 }: UserInputInterface) => {
   return (
-    <UserInputDiv className="closetly-user-input">
+    <UserInputDiv className={`cui-container ${otherProps.className}`}>
       {label && (
-        <UserInputLabel className="closetly-user-input-label" htmlFor={label}>
+        <UserInputLabel className="cui-label" htmlFor={label}>
           {label}
         </UserInputLabel>
       )}
       <Input
+        className={"cui-input"}
         placeholder={placeholder}
         onChange={onChange}
         value={value}
@@ -52,8 +53,9 @@ const Input = styled.input`
 const UserInputDiv = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 200px;
+  // min-width: 200px;
   height: fit-content;
+  // width: fit-content;
 `;
 
 const UserInputLabel = styled.label`

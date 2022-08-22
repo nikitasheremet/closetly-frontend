@@ -7,7 +7,7 @@ import serverRequest from "../../helpers/serverRequest";
 import Navbar from "../../components/Navbar";
 import { ImageDetailsInterface } from "../../components/Home/types/ImageTypes";
 import styled from "styled-components";
-import { ReactComponent as AddIcon } from "../../assests/add-button.svg";
+import UserInput from "../../components/Utility/Input/UserInput";
 
 function Main() {
   let history = useHistory();
@@ -86,6 +86,15 @@ function Main() {
     <>
       <Navbar />
       <div>
+        <SearchBarDiv id="search-bar-div">
+          <SearchBarInput
+            placeholder="Search Your Closet"
+            value=""
+            onChange={() => {}}
+            required={false}
+            name="closetSearchBar"
+          />
+        </SearchBarDiv>
         <AddImageButton onClick={addPictureClick}>
           <ImageIcon className="material-symbols-outlined">
             add_circle
@@ -112,14 +121,7 @@ function Main() {
             </div>
           );
         })}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            maxHeight: "calc(100vh - 51px)",
-          }}
-        >
+        <ClosetImagesContainer>
           {userImages?.map((image) => {
             if (filterImagesBasedOnTags(image)) {
               return (
@@ -134,7 +136,7 @@ function Main() {
               return undefined;
             }
           })}
-        </div>
+        </ClosetImagesContainer>
         <div>
           {isImageDetailsShown && (
             <ImageDetails
@@ -152,6 +154,30 @@ function Main() {
 
 export default Main;
 
+const ClosetImagesContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-height: calc(100vh - 51px);
+  overflow: auto;
+  justify-content: center;
+  align-items: center;
+`;
+
+const SearchBarInput = styled(UserInput)`
+  &.cui-input {
+    border-color: blue;
+  }
+  width: 80%;
+`;
+
+const SearchBarDiv = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const AddImageButton = styled.div`
   position: absolute;
   bottom: 10px;
@@ -163,5 +189,5 @@ const AddImageButton = styled.div`
   font-weight: lighter;
 `;
 const ImageIcon = styled.span`
-  font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 44, "opsz" 0;
+  font-size: 80px;
 `;
