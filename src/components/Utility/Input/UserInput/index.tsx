@@ -22,7 +22,7 @@ const UserInput = ({
   ...otherProps
 }: UserInputInterface) => {
   return (
-    <UserInputDiv className={`cui-container ${otherProps.className}`}>
+    <>
       {label && (
         <UserInputLabel className="cui-label" htmlFor={label}>
           {label}
@@ -39,7 +39,7 @@ const UserInput = ({
         required={required}
         {...otherProps}
       />
-    </UserInputDiv>
+    </>
   );
 };
 
@@ -48,14 +48,6 @@ const Input = styled.input`
   border-radius: 10px;
   border: 1px solid black;
   padding: 3px 10px 3px 10px;
-`;
-
-const UserInputDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  // min-width: 200px;
-  height: fit-content;
-  // width: fit-content;
 `;
 
 const UserInputLabel = styled.label`
