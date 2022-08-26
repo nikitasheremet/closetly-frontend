@@ -7,8 +7,8 @@ import serverRequest from "../../helpers/serverRequest";
 import Navbar from "../../components/Navbar";
 import { ImageDetailsInterface } from "../../components/Home/types/ImageTypes";
 import styled from "styled-components";
-import UserInput from "../../components/Utility/Input/UserInput";
-
+import SearchBar from "./components/SearchBar";
+import TagFilters from "./components/TagFilters";
 function Main() {
   let history = useHistory();
   const [userImages, setUserImages] = useState<ImageDetailsInterface[]>([]);
@@ -86,41 +86,13 @@ function Main() {
     <>
       <Navbar />
       <div>
-        <SearchBarDiv id="search-bar-div">
-          <SearchBarInput
-            placeholder="Search Your Closet"
-            value=""
-            onChange={() => {}}
-            required={false}
-            name="closetSearchBar"
-          />
-        </SearchBarDiv>
-        <AddImageButton onClick={addPictureClick}>
-          <ImageIcon className="material-symbols-outlined">
-            add_circle
-          </ImageIcon>
-        </AddImageButton>
-        {isUploadModalShown && (
-          <ImageUpload
-            toggleUploadModalShownState={toggleUploadModalShownState}
-            setUserImages={setUserImages}
-          ></ImageUpload>
-        )}
-        {tags.map((tag) => {
-          return (
-            <div key={tag + Number(tag)}>
-              <input
-                type="checkbox"
-                onChange={handleTagChange}
-                checked={selectedTags.includes(tag)}
-                id={tag}
-                className="tag-checkbox-filter"
-                name={tag}
-              ></input>
-              <label htmlFor={tag}>{tag}</label>
-            </div>
-          );
-        })}
+        <SearchBar />
+
+        <TagFilters
+          tags={tags}
+          onChange={handleTagChange}
+          selectedTags={selectedTags}
+        />
         <ClosetImagesContainer>
           {userImages?.map((image) => {
             if (filterImagesBasedOnTags(image)) {
@@ -148,6 +120,15 @@ function Main() {
           )}
         </div>
       </div>
+      <AddImageButton onClick={addPictureClick}>
+        <ImageIcon className="material-symbols-outlined">add_circle</ImageIcon>
+      </AddImageButton>
+      {isUploadModalShown && (
+        <ImageUpload
+          toggleUploadModalShownState={toggleUploadModalShownState}
+          setUserImages={setUserImages}
+        ></ImageUpload>
+      )}
     </>
   );
 }
@@ -160,20 +141,6 @@ const ClosetImagesContainer = styled.div`
   flex-wrap: wrap;
   max-height: calc(100vh - 51px);
   overflow: auto;
-  justify-content: center;
-  align-items: center;
-`;
-
-const SearchBarInput = styled(UserInput)`
-  &.cui-input {
-    border-color: blue;
-  }
-  width: 80%;
-`;
-
-const SearchBarDiv = styled.div`
-  width: 100%;
-  display: flex;
   justify-content: center;
   align-items: center;
 `;
