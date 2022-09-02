@@ -39,6 +39,7 @@ const ModalWrapper = styled("div")`
   width: 100vw;
   top: 0;
   background-color: rgba(0, 0, 0, 0.65);
+  z-index: 100;
 `;
 const InnerModal = styled("div")`
   visibility: ${({ innerHeight, innerWidth }) =>

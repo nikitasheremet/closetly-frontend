@@ -86,13 +86,15 @@ function Main() {
     <>
       <Navbar />
       <div>
-        <SearchBar />
+        <SearchSortDiv>
+          <SearchBar />
 
-        <TagFilters
-          tags={tags}
-          onChange={handleTagChange}
-          selectedTags={selectedTags}
-        />
+          <TagFilters
+            tags={tags}
+            onChange={handleTagChange}
+            selectedTags={selectedTags}
+          />
+        </SearchSortDiv>
         <ClosetImagesContainer>
           {userImages?.map((image) => {
             if (filterImagesBasedOnTags(image)) {
@@ -157,4 +159,7 @@ const AddImageButton = styled.div`
 `;
 const ImageIcon = styled.span`
   font-size: 80px;
+`;
+const SearchSortDiv = styled.div`
+  display: flex;
 `;
