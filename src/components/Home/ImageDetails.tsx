@@ -35,7 +35,7 @@ function ImageDetails({
   };
   const saveUpdatedFields = async () => {
     const { name, user, ...detailsToUpdate } = localImageDetails;
-    await serverRequest("post", `/image/updateImage`, detailsToUpdate, history);
+    await serverRequest("post", `image/updateImage`, detailsToUpdate, history);
     setUserImages((state) =>
       state.map((imageDetails) => {
         if (imageDetails._id === _id) {

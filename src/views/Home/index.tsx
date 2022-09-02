@@ -22,15 +22,19 @@ function Main() {
   const addPictureClick = (): void => {
     toggleUploadModalShownState(true);
   };
-  const handleTagChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.checked) {
-      setSelectedTags((state) => [...state, e.target.name]);
-    } else {
-      setSelectedTags((state) =>
-        state.filter((selectedTag) => selectedTag !== e.target.name)
-      );
-    }
+  const addTag = (tagName: string) => {
+    setSelectedTags((currentSelectedTagState) => [
+      ...currentSelectedTagState,
+      tagName,
+    ]);
   };
+  function removeTag(tagNameToRemove: string) {
+    setSelectedTags((currentSelectedTags) =>
+      currentSelectedTags.filter(
+        (selectedTag) => selectedTag !== tagNameToRemove
+      )
+    );
+  }
 
   useEffect(() => {
     const arrayOfTags = userImages.reduce((allTags, userImage) => {
@@ -91,7 +95,8 @@ function Main() {
 
           <TagFilters
             tags={tags}
-            onChange={handleTagChange}
+            addTag={addTag}
+            removeTag={removeTag}
             selectedTags={selectedTags}
           />
         </SearchSortDiv>

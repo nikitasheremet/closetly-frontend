@@ -5,10 +5,16 @@ import styled from "styled-components";
 
 interface TagFiltersPropTypes {
   tags: string[];
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  removeTag: Function;
+  addTag: Function;
   selectedTags: string[];
 }
-const TagFilters = ({ tags, onChange, selectedTags }: TagFiltersPropTypes) => {
+const TagFilters = ({
+  tags,
+  addTag,
+  removeTag,
+  selectedTags,
+}: TagFiltersPropTypes) => {
   const [isTagSelectionModalOpen, setIsTagSelectionModalOpen] = useState(false);
   let tags1 = ["option1", "option2", "option3"];
   const onChange1 = (event) => {
@@ -29,25 +35,26 @@ const TagFilters = ({ tags, onChange, selectedTags }: TagFiltersPropTypes) => {
             setIsTagSelectionModalOpen(!isTagSelectionModalOpen)
           }
         >
-          <div style={{ height: "200px", width: "200px" }}></div>
+          <div style={{ height: "200px", width: "200px" }}>
+            <div>
+              Showing images with the following tags:
+              {selectedTags.map((tag) => (
+                <p onClick={() => removeTag(tag)}>{tag}</p>
+              ))}
+            </div>
+            <hr />
+            <div>Available Tags to filter on:</div>
+            {tags
+              .filter((tag) => {
+                return !selectedTags.find((tagToFind) => tag === tagToFind);
+              })
+              .map((tag) => (
+                <p onClick={() => addTag(tag)}>{tag}</p>
+              ))}
+          </div>
         </Modal>
       )}
       {/* <Dropdown value={"Hello"} dropdownData={tags1} onChange={onChange1} /> */}
-      {tags.map((tag) => {
-        return (
-          <div key={tag + Number(tag)}>
-            <input
-              type="checkbox"
-              onChange={onChange}
-              checked={selectedTags.includes(tag)}
-              id={tag}
-              className="tag-checkbox-filter"
-              name={tag}
-            ></input>
-            <label htmlFor={tag}>{tag}</label>
-          </div>
-        );
-      })}
     </>
   );
 };
