@@ -17,6 +17,7 @@ function Main() {
   const [selectedImageDetails, setImageDetails] = useState<
     ImageDetailsInterface | {}
   >({});
+  const [searchInput, setSearchInput] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const addPictureClick = (): void => {
@@ -67,32 +68,29 @@ function Main() {
     }
     fetchImages();
   }, [history]);
-  const filterImagesBasedOnTags = (image) => {
-    if (!selectedTags.length) {
+  function filterBasedOnSearchInput(image: ImageDetailsInterface) {
+    if (
+      image.title.toLowerCase().includes(searchInput.toLowerCase()) ||
+      image.description.toLowerCase().includes(searchInput.toLowerCase())
+    ) {
       return true;
     }
-    const selectedTagsPresentInImageTag = image.tags
-      ?.map((imageTag) => {
-        if (selectedTags.includes(imageTag)) {
-          return imageTag;
-        } else {
-          return undefined;
-        }
-      })
-      .filter((tag) => tag);
-    if (selectedTagsPresentInImageTag?.length) {
-      return true;
-    } else {
-      return false;
-    }
+    return false;
+  }
+  const filterImagesBasedOnTags = (image: ImageDetailsInterface) => {
+    const imageTagsSet = new Set(image.tags);
+    // if no selected tags return true, check if every selected tag is present in the images tags array
+    return (
+      !selectedTags.length ||
+      !!selectedTags.every((selectedTag) => imageTagsSet.has(selectedTag))
+    );
   };
   return (
     <>
       <Navbar />
       <div>
         <SearchSortDiv>
-          <SearchBar />
-
+          <SearchBar onChange={setSearchInput} value={searchInput} />
           <TagFilters
             tags={tags}
             addTag={addTag}
@@ -101,20 +99,17 @@ function Main() {
           />
         </SearchSortDiv>
         <ClosetImagesContainer>
-          {userImages?.map((image) => {
-            if (filterImagesBasedOnTags(image)) {
-              return (
-                <ImageCard
-                  toggleIsImageDetailsShown={togglIsImageDetailsShown}
-                  setImageDetails={setImageDetails}
-                  key={image._id}
-                  imageDetails={image}
-                />
-              );
-            } else {
-              return undefined;
-            }
-          })}
+          {userImages
+            ?.filter(filterImagesBasedOnTags)
+            .filter(filterBasedOnSearchInput)
+            .map((image) => (
+              <ImageCard
+                toggleIsImageDetailsShown={togglIsImageDetailsShown}
+                setImageDetails={setImageDetails}
+                key={image._id}
+                imageDetails={image}
+              />
+            ))}
         </ClosetImagesContainer>
         <div>
           {isImageDetailsShown && (

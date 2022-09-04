@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import UserInput from "../../../components/Utility/Input/UserInput";
 
-const SearchBar = () => {
+const SearchBar = ({ value = "", onChange }) => {
   return (
     <SearchBarDiv id="search-bar-div">
       <SearchBarInput
         placeholder="Search Your Closet"
-        value=""
-        onChange={() => {}}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
         required={false}
         name="closetSearchBar"
       />
