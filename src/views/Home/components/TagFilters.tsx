@@ -27,7 +27,7 @@ const TagFilters = ({
           setIsTagSelectionModalOpen(!isTagSelectionModalOpen);
         }}
       >
-        <span className="material-symbols-outlined">sort</span>
+        <SortIcon className="material-symbols-outlined">sort</SortIcon>
       </SortButton>
       {isTagSelectionModalOpen && (
         <Modal
@@ -62,10 +62,19 @@ const TagFilters = ({
 export default TagFilters;
 
 const SortButton = styled.button`
-  width: 40px;
-  height: 40px;
+  min-width: 38px !important;
+  height: 38px !important;
   padding: 0;
-  border-radius: 50%;
+  border-radius: 10px;
   margin: 0;
+  background-color: white;
+  border: 1px solid black;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SortIcon = styled.span`
+  font-size: 24px;
 `;

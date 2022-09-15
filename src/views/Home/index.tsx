@@ -123,7 +123,7 @@ function Main() {
         </div>
       </div>
       <AddImageButton onClick={addPictureClick}>
-        <ImageIcon className="material-symbols-outlined">add_circle</ImageIcon>
+        <ImageIcon className="material-symbols-outlined">add</ImageIcon>
       </AddImageButton>
       {isUploadModalShown && (
         <ImageUpload
@@ -141,10 +141,12 @@ const ClosetImagesContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  max-height: calc(100vh - 51px);
+  max-height: calc(100vh - 51px + 68px);
   overflow: auto;
   justify-content: center;
   align-items: center;
+  row-gap: 10px;
+  column-gap: 10px;
 `;
 
 const AddImageButton = styled.div`
@@ -152,14 +154,22 @@ const AddImageButton = styled.div`
   bottom: 10px;
   right: 10px;
   border-radius: 50px;
-  height: 80px;
-  width: 80px;
+  height: 70px;
+  width: 70px;
   font-size: 60px;
   font-weight: lighter;
+  background-color: white;
+  border: 2px solid #393939;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1px 1px 5px 0px #393939;
 `;
 const ImageIcon = styled.span`
   font-size: 80px;
+  color: #393939;
 `;
 const SearchSortDiv = styled.div`
   display: flex;
+  padding: 15px;
 `;

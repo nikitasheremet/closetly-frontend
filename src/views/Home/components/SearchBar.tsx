@@ -21,7 +21,7 @@ const SearchBarInput = styled(UserInput)`
   &.cui-input {
     border-color: blue;
   }
-  width: 80%;
+  width: 90%;
 `;
 
 const SearchBarDiv = styled.div`
