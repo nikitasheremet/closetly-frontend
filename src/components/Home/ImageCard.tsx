@@ -30,6 +30,7 @@ const ImageCardDiv = styled.div`
   padding: 20px;
   border: 1px solid #d9d9d9;
   border-radius: 10px;
+  height: 200px;
 `;
 
 const ImagePhoto = styled.img`

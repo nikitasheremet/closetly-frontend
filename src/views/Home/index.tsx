@@ -141,12 +141,14 @@ const ClosetImagesContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  max-height: calc(100vh - 51px + 68px);
+  max-height: calc(100% - 68px);
   overflow: auto;
   justify-content: center;
   align-items: center;
   row-gap: 10px;
   column-gap: 10px;
+  padding: 10px 0 10px 0;
+  box-sizing: border-box;
 `;
 
 const AddImageButton = styled.div`
