@@ -1,4 +1,3 @@
-import "./css/ImageDetails.css";
 import styled from "styled-components";
 import Modal from "../Utility/Modal";
 import { useHistory } from "react-router-dom";
