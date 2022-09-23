@@ -92,7 +92,8 @@ function ImageDetails({
           </>
         ) : (
           <>
-            <div className="buttons">
+            {/* Should be refactored out */}
+            <ButtonsDiv>
               {editMode ? (
                 <>
                   <SaveChangesButton onClick={saveUpdatedFields}>
@@ -116,23 +117,30 @@ function ImageDetails({
               ) : (
                 <button onClick={() => setEditMode(true)}>Edit</button>
               )}
-            </div>
-            {editMode ? (
-              <input
-                name="title"
-                value={localImageDetails.title}
-                onChange={onChangeFormInput}
-              ></input>
-            ) : (
-              <ImageTitle className="image-name">{title}</ImageTitle>
-            )}
+            </ButtonsDiv>
+            {/* //////////////////////////////////////////////////// */}
+            {/* Should be refactored out */}
+            <ImageTitleDiv>
+              {editMode ? (
+                <ImgageTitleEditInput
+                  name="title"
+                  value={localImageDetails.title}
+                  onChange={onChangeFormInput}
+                />
+              ) : (
+                <ImageTitle className="image-name">{title}</ImageTitle>
+              )}
+            </ImageTitleDiv>
+            {/* ///////////////////////////////////////////////////// */}
             <ImageDetailsImg
               className="clothing-image"
               alt={`${title} - ${description}`}
               src={editMode ? localImageDetails.url : url}
             ></ImageDetailsImg>
             {editMode && (
-              <button onClick={handleChangeImage}>updateImage</button>
+              <UpdateImageButton onClick={handleChangeImage}>
+                updateImage
+              </UpdateImageButton>
             )}
             {editMode && (
               <input
@@ -142,22 +150,22 @@ function ImageDetails({
                 onChange={handleNewImageChange}
               ></input>
             )}
-            {editMode ? (
-              <input
-                name="description"
-                value={localImageDetails.description}
-                onChange={onChangeFormInput}
-              ></input>
-            ) : (
-              <ImageDescriptionDiv>
-                <ImageDescriptionTitle>Details</ImageDescriptionTitle>
+            <ImageDescriptionDiv>
+              <ImageDescriptionTitle>Details</ImageDescriptionTitle>
+              {editMode ? (
+                <ImageDetailsEditInput
+                  name="description"
+                  value={localImageDetails.description}
+                  onChange={onChangeFormInput}
+                />
+              ) : (
                 <ImageDescription className="additional-details">
                   {description}
                 </ImageDescription>
-              </ImageDescriptionDiv>
-            )}
+              )}
+            </ImageDescriptionDiv>
             {editMode && (
-              <>
+              <AddTagInputDiv>
                 <label htmlFor="tag-input"></label>
                 <input
                   ref={tagRef}
@@ -168,36 +176,40 @@ function ImageDetails({
                   }}
                   id="tag-input"
                   name="tag"
+                  placeholder="Add additional tag"
                 ></input>
                 <button onClick={addTag}>Add</button>
-              </>
+              </AddTagInputDiv>
             )}
-            {editMode ? (
-              localImageDetails.tags?.map((tag) => {
-                return (
-                  <span
-                    className="tag-name"
-                    key={tag + Number(tag)}
-                    onClick={() => deleteTag(tag)}
-                  >
-                    {tag}
-                  </span>
-                );
-              })
-            ) : (
-              <TagsDiv>
-                {tags?.map((tag) => {
+            <TagsDiv>
+              {editMode ? (
+                localImageDetails.tags?.map((tag) => {
                   return (
                     <ImageTag
-                      className="tag-name-details"
+                      className="tag-name"
                       key={tag + Number(tag)}
+                      onClick={() => deleteTag(tag)}
                     >
-                      {tag}
+                      <span>{tag}</span>
+                      <DeleteTagIconSpan>X</DeleteTagIconSpan>
                     </ImageTag>
                   );
-                })}
-              </TagsDiv>
-            )}
+                })
+              ) : (
+                <>
+                  {tags?.map((tag) => {
+                    return (
+                      <ImageTag
+                        className="tag-name-details"
+                        key={tag + Number(tag)}
+                      >
+                        {tag}
+                      </ImageTag>
+                    );
+                  })}
+                </>
+              )}
+            </TagsDiv>
           </>
         )}
       </div>
@@ -211,10 +223,20 @@ const ImageDetailsImg = styled("img")`
   width: 100%;
 `;
 
+const DeleteTagIconSpan = styled.span`
+  margin: 0 0 0 5px;
+`;
+
 const CloseModalButton = styled.button`
   position: absolute;
   top: 5px;
   right: 5px;
+`;
+
+const ButtonsDiv = styled.div`
+  margin: 0 0 10px 0;
+  column-gap: 5px;
+  display: flex;
 `;
 
 const SaveChangesButton = styled.button``;
@@ -227,8 +249,14 @@ const ImageTitle = styled.p`
   text-align: center;
   font-size: 1.2em;
   margin: 0;
-  padding: 10px 0 10px 0;
   font-weight: 500;
+`;
+
+const ImageTitleDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px 0 10px 0;
 `;
 
 const ImageTag = styled.div`
@@ -251,14 +279,29 @@ const ImageDescription = styled.p`
   margin: 0px;
 `;
 
+const UpdateImageButton = styled.button`
+  margin: 5px 0 5px 0;
+`;
+
+const ImageDetailsEditInput = styled.input`
+  margin: 5px 0 5px 0;
+`;
+
 const ImageDescriptionDiv = styled.div`
   border-bottom: 1px solid #d9d9d9;
   border-top: 1px solid #d9d9d9;
-  margin: 10px 0 10px 0;
+  margin: 15px 0 10px 0;
 `;
 
 const TagsDiv = styled.div`
   display: flex;
   column-gap: 5px;
   flex-wrap: wrap;
+  margin: 10px 0 0 0;
+`;
+
+const ImgageTitleEditInput = styled.input``;
+
+const AddTagInputDiv = styled.div`
+  dispaly: flex;
 `;
