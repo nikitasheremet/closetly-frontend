@@ -4,6 +4,12 @@ import "./css/ImageUpload.css";
 import Modal from "../Utility/Modal";
 import serverRequest from "../../helpers/serverRequest";
 import { ImageDetailsInterface } from "./types/ImageTypes";
+import {
+  CloseModalButton,
+  ImageTag,
+  DeleteTagIconSpan,
+} from "./styledComponents";
+import styled from "styled-components";
 
 interface ImageUploadProps {
   toggleUploadModalShownState: React.Dispatch<React.SetStateAction<boolean>>;
@@ -71,6 +77,8 @@ function ImageUpload({
     }
   };
 
+  const isUploadDisabled = !(imageDetails.title && imageRef);
+
   const deleteTag = (tagName) => {
     setTags((state) => state.filter((tag) => tag !== tagName));
   };
@@ -78,62 +86,110 @@ function ImageUpload({
     <Modal>
       {!isLoading && (
         <>
-          <button onClick={() => toggleUploadModalShownState(false)}>X</button>
-          <label htmlFor="file-upload">Select a file or take a picture</label>
-          <input
-            name="clothing-picture"
-            ref={imageRef}
-            id="file-upload"
-            type="file"
-          ></input>
+          <CloseModalButton onClick={() => toggleUploadModalShownState(false)}>
+            X
+          </CloseModalButton>
+          <UploadInputDiv>
+            <label htmlFor="file-upload">Select a file or take a picture</label>
+            <input
+              name="clothing-picture"
+              ref={imageRef}
+              id="file-upload"
+              type="file"
+            ></input>
+          </UploadInputDiv>
 
-          <label htmlFor="image-title">Cloting Item Title</label>
-          <input
-            name="title"
-            id="image-title"
-            value={imageDetails.title}
-            onChange={onChangeFormInput}
-          ></input>
-          <label htmlFor="clothing-description">
-            OPTIONAL: Add a brief description
-          </label>
-          <textarea
-            name="description"
-            id="clothing-description"
-            value={imageDetails.description}
-            onChange={onChangeFormInput}
-          ></textarea>
-          <label htmlFor="tag-input"></label>
-          <input
-            ref={tagRef}
-            onKeyDown={(e) => {
-              console.log("");
-              if (e.key === "Enter") {
-                addTag();
-              }
-            }}
-            id="tag-input"
-            name="tag"
-          ></input>
-          <button onClick={addTag}>Add</button>
-          {tags.map((tag) => {
-            return (
-              <span
-                className="tag-name"
-                key={tag + Number(tag)}
-                onClick={() => deleteTag(tag)}
-              >
-                {tag}
-              </span>
-            );
-          })}
-
-          <button onClick={uploadImage}>Upload</button>
+          <UploadInputDiv>
+            <label htmlFor="image-title">Cloting Item Title</label>
+            <input
+              name="title"
+              id="image-title"
+              value={imageDetails.title}
+              onChange={onChangeFormInput}
+            ></input>
+          </UploadInputDiv>
+          <UploadInputDiv>
+            <label htmlFor="clothing-description">
+              OPTIONAL: Add a brief description
+            </label>
+            <textarea
+              name="description"
+              id="clothing-description"
+              value={imageDetails.description}
+              onChange={onChangeFormInput}
+            ></textarea>
+          </UploadInputDiv>
+          <UploadInputDiv>
+            <label htmlFor="tag-input">Add Tags</label>
+            <AddTagInputAndButtonDiv>
+              <input
+                ref={tagRef}
+                onKeyDown={(e) => {
+                  console.log("");
+                  if (e.key === "Enter") {
+                    addTag();
+                  }
+                }}
+                id="tag-input"
+                name="tag"
+              ></input>
+              <AddTagButton onClick={addTag}>Add</AddTagButton>
+            </AddTagInputAndButtonDiv>
+          </UploadInputDiv>
+          <UploadTagsAdded>
+            {tags.map((tag) => {
+              return (
+                <ImageTag
+                  className="tag-name"
+                  key={tag + Number(tag)}
+                  onClick={() => deleteTag(tag)}
+                >
+                  {tag}
+                  <DeleteTagIconSpan>X</DeleteTagIconSpan>
+                </ImageTag>
+              );
+            })}
+          </UploadTagsAdded>
+          <AddImageToClosetButton
+            onClick={uploadImage}
+            disabled={isUploadDisabled}
+          >
+            Add Image To Closet
+          </AddImageToClosetButton>
         </>
       )}
+      {/* Create generic loading indicator */}
       {isLoading && <div id="loading-indicator"></div>}
     </Modal>
   );
 }
 
 export default ImageUpload;
+
+const UploadInputDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  margin: 0 0 10px 0;
+`;
+
+const AddTagButton = styled.button`
+  width: 20%;
+`;
+
+const AddTagInputAndButtonDiv = styled.div`
+  display: flex;
+  column-gap: 10px;
+`;
+
+const AddImageToClosetButton = styled.button`
+  cursor: pointer;
+  ${({ disabled }) =>
+    disabled && "background-color: light-grey; pointer-events: none;"}
+`;
+
+const UploadTagsAdded = styled.div`
+  display: flex;
+  column-gap: 10px;
+  margin: 0 0 10px 0;
+`;

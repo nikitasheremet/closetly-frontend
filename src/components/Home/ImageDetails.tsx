@@ -3,6 +3,11 @@ import Modal from "../Utility/Modal";
 import { useHistory } from "react-router-dom";
 import { useRef, useState } from "react";
 import serverRequest from "../../helpers/serverRequest";
+import {
+  CloseModalButton,
+  ImageTag,
+  DeleteTagIconSpan,
+} from "./styledComponents";
 
 function ImageDetails({
   toggleIsImageDetailsShown,
@@ -223,15 +228,11 @@ const ImageDetailsImg = styled("img")`
   width: 100%;
 `;
 
-const DeleteTagIconSpan = styled.span`
-  margin: 0 0 0 5px;
-`;
-
-const CloseModalButton = styled.button`
-  position: absolute;
-  top: 5px;
-  right: 5px;
-`;
+// const CloseModalButton = styled.button`
+//   position: absolute;
+//   top: 5px;
+//   right: 5px;
+// `;
 
 const ButtonsDiv = styled.div`
   margin: 0 0 10px 0;
@@ -257,14 +258,6 @@ const ImageTitleDiv = styled.div`
   align-items: center;
   justify-content: center;
   margin: 5px 0 10px 0;
-`;
-
-const ImageTag = styled.div`
-  background-color: #d0d0d0;
-  padding: 5px 10px 5px 10px;
-  border-radius: 30px;
-  font-weight: 600;
-  width: fit-content;
 `;
 
 const ImageDescriptionTitle = styled.p`
