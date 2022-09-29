@@ -4,6 +4,8 @@ import UserInput from "../../components/Utility/Input/UserInput";
 import styled, { css } from "styled-components";
 import serverRequest from "../../helpers/serverRequest";
 import { useHistory } from "react-router-dom";
+import { ParentPageDiv } from "../styles";
+import MidPageTitleAndSubtitle from "../components/MidPageTitleSubtitle";
 
 const RegistrationPage = () => {
   const history = useHistory();
@@ -47,8 +49,12 @@ const RegistrationPage = () => {
     }
   };
   return (
-    <>
+    <ParentPageDiv>
       <Navbar />
+      <MidPageTitleAndSubtitle
+        title="Get Organizing with Closetly"
+        subtitle="Create your account"
+      />
       <div style={{ width: "50%", padding: "20px" }}>
         <form onSubmit={registerUser}>
           <UserInput
@@ -84,7 +90,7 @@ const RegistrationPage = () => {
           </RegisterButton>
         </form>
       </div>
-    </>
+    </ParentPageDiv>
   );
 };
 

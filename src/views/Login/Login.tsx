@@ -4,13 +4,16 @@ import { useHistory } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import serverRequest from "../../helpers/serverRequest";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { ParentPageDiv } from "../styles";
+import MidPageTitleAndSubtitle from "../components/MidPageTitleSubtitle";
 
 function Login() {
   let history = useHistory();
-  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const { username, password } = formData;
+    const { email: username, password } = formData;
     const loginResult = await serverRequest(
       "POST",
       "user/login",
@@ -56,55 +59,58 @@ function Login() {
     })();
   }, [history]);
   return (
-    <LoginPageRootDiv>
+    <ParentPageDiv>
       <Navbar />
-      <SignInTitleDiv>
-        <SignInTitle>Sign In</SignInTitle>
-        <SignInSubtitle>Enter your email and password</SignInSubtitle>
-      </SignInTitleDiv>
+      <MidPageTitleAndSubtitle
+        title="Sign In"
+        subtitle="Enter your email and password"
+      />
       <LoginInputDiv>
         <LoginInputFormDiv>
-          {/* <label htmlFor="email">Username</label> */}
           <LoginInput
             id="email"
             name="email"
             type="text"
-            value={formData.username}
+            value={formData.email}
             onChange={updateData}
             placeholder="Email"
           />
-          {/* <label htmlFor="password">Password</label> */}
-          <LoginInput
-            id="password"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={updateData}
-            placeholder="Password"
-          />
+          <PasswordInputDiv>
+            <LoginInput
+              id="password"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={updateData}
+              placeholder="Password"
+            />
+            <ForgotPasswordButton>Forgot Password?</ForgotPasswordButton>
+          </PasswordInputDiv>
           <SignUpButton onClick={handleSubmit}>LOGIN</SignUpButton>
         </LoginInputFormDiv>
         <AlreadyHaveAccountText>
-          Don't have an account? <span>Sign Up</span>
+          Don't have an account? <SignUpCTA to="/register">Sign Up</SignUpCTA>
         </AlreadyHaveAccountText>
       </LoginInputDiv>
-    </LoginPageRootDiv>
+    </ParentPageDiv>
   );
 }
 
 export default Login;
 
-const LoginPageRootDiv = styled.div`
-  background: #fff5f1;
+const PasswordInputDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 15px;
 `;
 
-const SignInTitle = styled.h1`
-  margin: 20px 0 10px 0;
-`;
-
-const SignInSubtitle = styled.p`
-  margin: 0;
-  color: #a8a6a7;
+const ForgotPasswordButton = styled.button`
+  align-self: flex-end;
+  background: none;
+  border: none;
+  font-weight: bold;
+  color: rgba(0, 89, 38, 0.4);
+  font-size: 16px;
 `;
 
 const LoginInput = styled.input`
@@ -112,6 +118,8 @@ const LoginInput = styled.input`
   border-bottom: 1px solid #a8a6a7;
   padding-bottom: 10px;
   margin-bottom: 10px;
+  background: transparent;
+  width: 100%;
 
   &::placeholder {
     color: #a8a6a7;
@@ -134,14 +142,6 @@ const LoginInputFormDiv = styled.div`
   margin: auto;
 `;
 
-const SignInTitleDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 30% 0 25% 0;
-`;
-
 const AlreadyHaveAccountText = styled.p``;
 
 const SignUpButton = styled.button`
@@ -154,4 +154,9 @@ const SignUpButton = styled.button`
   font-family: "Source Sans Pro", sans-serif;
   font-weight: 400;
   color: #fff;
+`;
+
+const SignUpCTA = styled(Link)`
+  color: rgba(0, 89, 38, 0.4);
+  font-weight: bold;
 `;

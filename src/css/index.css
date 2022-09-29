@@ -7,13 +7,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
 #root {
-  height: 100vh;
-  display: grid;
-  grid-template-rows: 50px auto;
+  font-family: "Source Sans Pro", sans-serif;
 }

@@ -107,8 +107,7 @@ const Nav = styled.nav`
   font-family: "Source Sans Pro", sans-serif;
   display: flex;
   flex-direction: row;
-  height: 2em;
   align-items: center;
-  height: 100%;
   border-bottom: 1px solid lightgrey;
+  height: 50px;
 `;

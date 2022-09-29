@@ -1,7 +1,8 @@
+import { ChangeEventHandler } from "react";
 import styled from "styled-components";
 
 interface UserInputInterface {
-  onChange: Function;
+  onChange: ChangeEventHandler<HTMLInputElement>;
   placeholder?: string;
   value: string | number;
   name: string;
