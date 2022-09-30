@@ -1,11 +1,18 @@
 import { useState } from "react";
-import Navbar from "../../components/Navbar";
-import UserInput from "../../components/Utility/Input/UserInput";
+import Navbar from "../../../../components/Navbar";
+import UserInput from "../../../../components/Utility/Input/UserInput";
 import styled, { css } from "styled-components";
-import serverRequest from "../../helpers/serverRequest";
-import { useHistory } from "react-router-dom";
-import { ParentPageDiv } from "../styles";
-import MidPageTitleAndSubtitle from "../components/MidPageTitleSubtitle";
+import serverRequest from "../../../../helpers/serverRequest";
+import { Link, useHistory } from "react-router-dom";
+import {
+  DataIntakeInput,
+  ParentPageDiv,
+  SecondaryCTA,
+  UnathenticatedContentDiv,
+  UnauthencticatedPrimaryButtonCTA,
+  UnautheticatedFormDiv,
+} from "../../styledComponents";
+import MidPageTitleAndSubtitle from "../../components/MidPageTitleSubtitle";
 
 const RegistrationPage = () => {
   const history = useHistory();
@@ -55,52 +62,55 @@ const RegistrationPage = () => {
         title="Get Organizing with Closetly"
         subtitle="Create your account"
       />
-      <div style={{ width: "50%", padding: "20px" }}>
-        <form onSubmit={registerUser}>
-          <UserInput
+      <UnathenticatedContentDiv>
+        <UnautheticatedFormDiv>
+          <DataIntakeInput
             onChange={onRegistrationDetailsChange}
             value={registrationDetails.email}
             name="email"
             type="email"
-            label="Email Address*"
+            placeholder="Email"
             required
           />
-          <UserInput
+          <DataIntakeInput
             onChange={onRegistrationDetailsChange}
             value={registrationDetails.password}
             name="password"
             type="password"
-            label="Password*"
+            placeholder="Password"
             required
           />
-          <UserInput
+          <DataIntakeInput
             onChange={onRegistrationDetailsChange}
             value={registrationDetails.reEnterPassword}
             name="reEnterPassword"
             type="password"
-            label="Re-Enter Password*"
+            placeholder="Required Password"
             required
           />
-          <RegisterButton
-            style={{ marginTop: "10px" }}
-            disabled={isRegisterButtonDisabled()}
-            type="submit"
-          >
+          <RegisterButton disabled={isRegisterButtonDisabled()} type="submit">
             Register
           </RegisterButton>
-        </form>
-      </div>
+        </UnautheticatedFormDiv>
+        <AlreadyHaveAccountText>
+          Already have an account?{" "}
+          <SecondaryCTA to="/login">Login</SecondaryCTA>
+        </AlreadyHaveAccountText>
+      </UnathenticatedContentDiv>
     </ParentPageDiv>
   );
 };
 
-const RegisterButton = styled.button`
+export default RegistrationPage;
+
+const RegisterButton = styled(UnauthencticatedPrimaryButtonCTA)`
+  margin-top: 20px;
   ${(props) =>
     props.disabled &&
     css`
       pointer-events: none;
-      opacity: 70%;
+      opacity: 40%;
     `}
 `;
 
-export default RegistrationPage;
+const AlreadyHaveAccountText = styled.p``;

@@ -13,9 +13,9 @@ function ImageCard({
       }}
       className="image-card"
     >
-      <CardTitle className="photo-title">{title}</CardTitle>
-      <TitleImageDivider />
+      {/* <TitleImageDivider /> */}
       <ImagePhoto className="image-photo" src={url} alt={_id} />
+      <CardTitle className="photo-title">{title}</CardTitle>
     </ImageCardDiv>
   );
 }
@@ -23,10 +23,12 @@ function ImageCard({
 export default ImageCard;
 const ImageCardDiv = styled.div`
   width: 30%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
+  min-width: 150px;
+  display: grid;
+  grid-template-rows: auto 20px;
+  // flex-direction: column;
+  // align-items: center;
+  // position: relative;
   padding: 20px;
   border: 1px solid #d9d9d9;
   border-radius: 10px;
@@ -34,9 +36,9 @@ const ImageCardDiv = styled.div`
 `;
 
 const ImagePhoto = styled.img`
-  width: 100%;
+  // width: 100%;
   max-height: 100%;
-  padding: 10px;
+  // padding: 10px;
 `;
 
 const CardTitle = styled.div`

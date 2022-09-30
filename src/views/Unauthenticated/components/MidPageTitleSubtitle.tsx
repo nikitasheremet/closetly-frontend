@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 interface Props {
   title: string;
-  subtitle: string;
+  subtitle?: string;
 }
 
 export default function MidPageTitleAndSubtitle({
@@ -20,6 +20,7 @@ export default function MidPageTitleAndSubtitle({
 
 const SignInTitle = styled.h1`
   margin: 20px 0 10px 0;
+  text-align: center;
 `;
 
 const SignInSubtitle = styled.p`
@@ -32,5 +33,6 @@ const SignInTitleDiv = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 30% 0 25% 0;
+  margin: 30% auto 25% auto;
+  width: 80%;
 `;

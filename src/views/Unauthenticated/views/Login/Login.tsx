@@ -1,24 +1,31 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import Navbar from "../../components/Navbar";
-import serverRequest from "../../helpers/serverRequest";
+import Navbar from "../../../../components/Navbar";
+import serverRequest from "../../../../helpers/serverRequest";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { ParentPageDiv } from "../styles";
-import MidPageTitleAndSubtitle from "../components/MidPageTitleSubtitle";
+import {
+  ParentPageDiv,
+  DataIntakeInput,
+  UnathenticatedContentDiv,
+  UnautheticatedFormDiv,
+  SecondaryCTA,
+  UnauthencticatedPrimaryButtonCTA,
+} from "../../styledComponents";
+import MidPageTitleAndSubtitle from "../../components/MidPageTitleSubtitle";
 
 function Login() {
   let history = useHistory();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const { email: username, password } = formData;
+    const { email, password } = formData;
     const loginResult = await serverRequest(
       "POST",
       "user/login",
       {
-        username,
+        email,
         password,
       },
       history,
@@ -65,9 +72,9 @@ function Login() {
         title="Sign In"
         subtitle="Enter your email and password"
       />
-      <LoginInputDiv>
-        <LoginInputFormDiv>
-          <LoginInput
+      <UnathenticatedContentDiv>
+        <UnautheticatedFormDiv>
+          <DataIntakeInput
             id="email"
             name="email"
             type="text"
@@ -76,7 +83,7 @@ function Login() {
             placeholder="Email"
           />
           <PasswordInputDiv>
-            <LoginInput
+            <DataIntakeInput
               id="password"
               name="password"
               type="password"
@@ -87,11 +94,12 @@ function Login() {
             <ForgotPasswordButton>Forgot Password?</ForgotPasswordButton>
           </PasswordInputDiv>
           <SignUpButton onClick={handleSubmit}>LOGIN</SignUpButton>
-        </LoginInputFormDiv>
-        <AlreadyHaveAccountText>
-          Don't have an account? <SignUpCTA to="/register">Sign Up</SignUpCTA>
-        </AlreadyHaveAccountText>
-      </LoginInputDiv>
+        </UnautheticatedFormDiv>
+        <DontHaveAccountText>
+          Don't have an account?{" "}
+          <SecondaryCTA to="/register">Sign Up</SecondaryCTA>
+        </DontHaveAccountText>
+      </UnathenticatedContentDiv>
     </ParentPageDiv>
   );
 }
@@ -113,50 +121,6 @@ const ForgotPasswordButton = styled.button`
   font-size: 16px;
 `;
 
-const LoginInput = styled.input`
-  border: none;
-  border-bottom: 1px solid #a8a6a7;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-  background: transparent;
-  width: 100%;
+const DontHaveAccountText = styled.p``;
 
-  &::placeholder {
-    color: #a8a6a7;
-  }
-`;
-
-const LoginInputDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-const LoginInputFormDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-  align-items: stretch;
-  justify-content: center;
-  margin: auto;
-`;
-
-const AlreadyHaveAccountText = styled.p``;
-
-const SignUpButton = styled.button`
-  border-radius: 20px;
-  height: 44px;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  border: none;
-  font-size: 22px;
-  background: rgba(0, 89, 38, 0.4);
-  font-family: "Source Sans Pro", sans-serif;
-  font-weight: 400;
-  color: #fff;
-`;
-
-const SignUpCTA = styled(Link)`
-  color: rgba(0, 89, 38, 0.4);
-  font-weight: bold;
-`;
+const SignUpButton = styled(UnauthencticatedPrimaryButtonCTA)``;

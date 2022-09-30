@@ -1,12 +1,12 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Account from "./views/Account/Account";
-import Login from "./views/Login/Login";
+import Login from "./views/Unauthenticated/views/Login/Login";
 import Main from "./views/Home";
-import LandingPage from "./views/LandingPage/LandingPage";
+import LandingPage from "./views/Unauthenticated/views/LandingPage/LandingPage";
 import { useState } from "react";
 import { authContext } from "./hooks/authContent/authContext";
 import { useEffect } from "react";
-import RegistrationPage from "./views/RegistrationPage.tsx";
+import RegistrationPage from "./views/Unauthenticated/views/RegistrationPage.tsx";
 
 function App() {
   const authTokenFetch = () => {
